@@ -1,0 +1,1409 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<!-- Google tag (gtag.js) — GA4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-H5VLHW8761"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  // 自家裝置標記：任一頁加 ?ga=off 造訪一次，之後該瀏覽器的流量都標成 internal，
+  // 由 GA 的「內部流量」資料篩選器排除；?ga=on 解除。
+  (function(){
+    var K='ga_internal', q=location.search, internal=false;
+    try{
+      if(q.indexOf('ga=off')>-1){ localStorage.setItem(K,'1'); }
+      if(q.indexOf('ga=on')>-1){ localStorage.removeItem(K); }
+      internal = localStorage.getItem(K)==='1';
+    }catch(e){}
+    gtag('config','G-H5VLHW8761', internal ? {traffic_type:'internal'} : {});
+  })();
+</script>
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026 北海道 溫泉慢遊</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#faf7f2; --card:#ffffff; --ink:#2b2622; --sub:#6b6156;
+    --line:#e8ded0; --accent:#e05a2b; --accent2:#c9451c;
+    --blue:#2563eb; --biei:#e05a2b; --onsen:#7c3aed; --otaru:#0891b2; --sapporo:#16a34a;
+    --gold:#c8973f; --soft:#f3ece1;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:"Noto Sans TC",system-ui,-apple-system,"Microsoft JhengHei",sans-serif;
+    background:var(--bg);color:var(--ink);line-height:1.7;font-size:15px;}
+  .wrap{max-width:960px;margin:0 auto;padding:0 16px 80px;display:flex;flex-direction:column;overflow-x:clip;}
+  .wrap > footer{order:99;}
+  .tab-btn{white-space:nowrap;font-size:14px;color:var(--sub);background:#fff;border:1px solid var(--line);padding:8px 16px;border-radius:999px;cursor:pointer;font-family:inherit;font-weight:700;}
+  .tab-btn:hover{border-color:var(--accent);color:var(--accent);}
+  .tab-btn.active{background:var(--accent);color:#fff;border-color:var(--accent);}
+  .tabbreak{flex-basis:100%;height:0;}
+  header.hero{
+    background-image:
+      linear-gradient(180deg, rgba(28,18,12,.42) 0%, rgba(120,44,16,.62) 55%, rgba(150,58,20,.80) 100%),
+      url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%201600%20520%22%20preserveAspectRatio%3D%22xMidYMid%20slice%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22sky%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%220%22%20y2%3D%221%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%2324406b%22%2F%3E%3Cstop%20offset%3D%22.38%22%20stop-color%3D%22%236d5f83%22%2F%3E%3Cstop%20offset%3D%22.72%22%20stop-color%3D%22%23c2734a%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%23e3a468%22%2F%3E%3C%2FlinearGradient%3E%3ClinearGradient%20id%3D%22mt%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%220%22%20y2%3D%221%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%234a6480%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%2333485f%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Crect%20width%3D%221600%22%20height%3D%22520%22%20fill%3D%22url%28%23sky%29%22%2F%3E%3Ccircle%20cx%3D%221215%22%20cy%3D%22300%22%20r%3D%2252%22%20fill%3D%22%23ffdca6%22%20opacity%3D%22.8%22%2F%3E%3Ccircle%20cx%3D%221215%22%20cy%3D%22300%22%20r%3D%2296%22%20fill%3D%22%23ffdca6%22%20opacity%3D%22.16%22%2F%3E%3Cpath%20d%3D%22M0%2C300%20L170%2C208%20L292%2C268%20L430%2C182%20L556%2C262%20L700%2C196%20L858%2C276%20L1002%2C224%20L1178%2C288%20L1318%2C236%20L1462%2C282%20L1600%2C246%20L1600%2C520%20L0%2C520Z%22%20fill%3D%22url%28%23mt%29%22%2F%3E%3Cpath%20d%3D%22M430%2C182%20L472%2C210%20L451%2C215%20L430%2C205%20L409%2C217%20L388%2C211Z%22%20fill%3D%22%23eef3f7%22%20opacity%3D%22.92%22%2F%3E%3Cpath%20d%3D%22M700%2C196%20L738%2C222%20L717%2C227%20L700%2C218%20L681%2C229%20L661%2C223Z%22%20fill%3D%22%23eef3f7%22%20opacity%3D%22.92%22%2F%3E%3Cpath%20d%3D%22M1002%2C224%20L1034%2C246%20L1017%2C250%20L1002%2C243%20L986%2C252%20L969%2C247Z%22%20fill%3D%22%23eef3f7%22%20opacity%3D%22.85%22%2F%3E%3Cpath%20d%3D%22M0%2C344%20C220%2C302%20384%2C364%20604%2C338%20C824%2C312%20986%2C368%201206%2C338%20C1386%2C312%201506%2C352%201600%2C332%20L1600%2C520%20L0%2C520Z%22%20fill%3D%22%239c5f38%22%20opacity%3D%22.92%22%2F%3E%3Cpath%20d%3D%22M0%2C398%20C204%2C362%20424%2C418%20646%2C392%20C888%2C364%201066%2C412%201286%2C386%20C1446%2C368%201546%2C402%201600%2C390%20L1600%2C520%20L0%2C520Z%22%20fill%3D%22%237a4a2c%22%2F%3E%3Cpath%20d%3D%22M0%2C446%20C264%2C414%20526%2C458%20786%2C434%20C1046%2C410%201308%2C452%201600%2C430%20L1600%2C520%20L0%2C520Z%22%20fill%3D%22%23553220%22%2F%3E%3Cg%20fill%3D%22%232f1c12%22%20opacity%3D%22.55%22%3E%3Cpath%20d%3D%22M120%2C446%20l9%2C-30%20l9%2C30Z%22%2F%3E%3Cpath%20d%3D%22M150%2C452%20l7%2C-24%20l7%2C24Z%22%2F%3E%3Cpath%20d%3D%22M1380%2C438%20l10%2C-32%20l10%2C32Z%22%2F%3E%3Cpath%20d%3D%22M1412%2C444%20l8%2C-26%20l8%2C26Z%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E"),
+      linear-gradient(135deg,#e05a2b 0%,#c9451c 55%,#9c3312 100%);
+    background-size:cover,cover,cover;
+    background-position:center,center 62%,center;
+    background-repeat:no-repeat;
+    color:#fff;padding:52px 20px 44px;text-align:center;position:relative;overflow:hidden;
+    text-shadow:0 2px 10px rgba(0,0,0,.45);}
+  header.hero:before,header.hero:after{content:none;}
+  header.hero h1{margin:0 0 6px;font-size:26px;font-weight:900;letter-spacing:1px;}
+  header.hero .sub{opacity:.95;font-size:14px;}
+  header.hero .tag{display:inline-block;margin-top:12px;background:rgba(255,255,255,.18);
+    border:1px solid rgba(255,255,255,.35);padding:5px 14px;border-radius:999px;font-size:13px;}
+  nav.toc{position:sticky;top:0;z-index:500;background:rgba(250,247,242,.95);backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--line);padding:8px 0;margin-bottom:6px;}
+  nav.toc .in{max-width:960px;margin:0 auto;padding:0 12px;display:flex;gap:8px;flex-wrap:wrap;justify-content:center;}
+  nav.toc a{white-space:nowrap;font-size:13px;color:var(--sub);text-decoration:none;
+    padding:6px 12px;border-radius:999px;border:1px solid var(--line);background:#fff;}
+  nav.toc a:hover{color:var(--accent);border-color:var(--accent);}
+  section{margin-top:28px;}
+  h2{font-size:20px;margin:0 0 14px;padding-left:12px;border-left:5px solid var(--accent);}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 18px;
+    box-shadow:0 2px 10px rgba(120,90,50,.05);}
+  .grid{display:grid;gap:12px;}
+  .g4{grid-template-columns:repeat(4,1fr);}
+  .g2{grid-template-columns:repeat(2,1fr);}
+  @media(max-width:720px){.g4{grid-template-columns:repeat(2,1fr);}.g2{grid-template-columns:1fr;}
+    .grid[style*="repeat(3"]{grid-template-columns:1fr !important;}}
+  .kpi{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 12px;text-align:center;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;min-height:132px;}
+  .kpi .k{font-size:13px;font-weight:700;color:var(--sub);letter-spacing:.06em;}
+  .kpi .n{font-size:19px;font-weight:900;color:var(--accent2);line-height:1.25;}
+  .kpi .l{font-size:12px;color:var(--sub);line-height:1.5;}
+  .kpi .n .u{font-size:.72em;font-weight:700;margin-left:2px;}
+  table{width:100%;border-collapse:collapse;font-size:14px;}
+  th,td{padding:9px 10px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top;}
+  th{background:var(--soft);font-weight:700;font-size:13px;}
+  td.day{white-space:nowrap;font-weight:700;color:var(--accent2);}
+  .pill{display:inline-block;font-size:11px;padding:2px 9px;border-radius:999px;font-weight:700;}
+  .rec{background:#e8f6ec;color:#137a37;border:1px solid #bfe6cb;}
+  .alt{background:#f1eef7;color:#6b4bb0;border:1px solid #ddd2ee;}
+  #leafletmap{height:440px;border-radius:14px;border:1px solid var(--line);z-index:1;}
+  #routemap{height:480px;border-radius:14px;border:1px solid var(--line);z-index:1;}
+  .rbadge{color:#fff;padding:2px 8px;border-radius:8px;font-size:11.5px;font-weight:800;white-space:nowrap;box-shadow:0 1px 3px rgba(0,0,0,.35);}
+  .rnum{display:inline-block;min-width:24px;height:24px;line-height:22px;text-align:center;color:#fff;border-radius:50%;font-size:13px;font-weight:800;border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.45);}
+  .dnum{display:inline-block;min-width:22px;height:22px;line-height:22px;text-align:center;color:#fff;border-radius:50%;font-size:12px;font-weight:800;}
+  .lsw{display:inline-block;width:22px;height:0;vertical-align:middle;margin-right:6px;}
+  .leaflet-tooltip.rbadge-wrap{background:none;border:none;box-shadow:none;padding:0;}
+  .leaflet-tooltip.rbadge-wrap:before{display:none;border:none;}
+  .leaflet-tooltip.rnode{background:#fff;border:1px solid #e8ded0;font-weight:700;font-size:12px;color:#2b2622;box-shadow:0 1px 3px rgba(0,0,0,.2);}
+  .legend{display:flex;flex-wrap:wrap;gap:12px;margin-top:10px;font-size:12px;color:var(--sub);}
+  .legend .d{display:inline-block;width:11px;height:11px;border-radius:50%;margin-right:5px;vertical-align:middle;}
+  .spotlist{list-style:none;padding:0;margin:0;display:grid;gap:8px;}
+  .spotlist li{display:flex;justify-content:space-between;align-items:center;gap:10px;
+    padding:9px 12px;border:1px solid var(--line);border-radius:10px;background:#fff;}
+  .spotlist a{font-size:12px;text-decoration:none;color:#fff;background:var(--blue);
+    padding:5px 11px;border-radius:8px;white-space:nowrap;font-weight:600;}
+  .spotlist a:hover{filter:brightness(.92);}
+  .spotlist .nm{font-weight:600;}
+  .spotlist .ds{font-size:12px;color:var(--sub);}
+  .note{background:#fff7ed;border:1px solid #fbd9a8;border-radius:12px;padding:14px 16px;font-size:14px;}
+  .warn{background:#fef2f2;border:1px solid #fbc4c4;border-radius:12px;padding:14px 16px;font-size:14px;}
+  .warn b,.note b{color:var(--accent2);}
+  ul.clean{margin:6px 0 0;padding-left:20px;}
+  ul.clean li{margin:4px 0;}
+  .msgbox{position:relative;}
+  pre.msg{background:#1f2937;color:#e8edf3;border-radius:12px;padding:16px 16px;font-size:13px;
+    line-height:1.7;white-space:pre-wrap;font-family:inherit;overflow:auto;}
+  .copybtn{position:absolute;top:10px;right:10px;background:var(--accent);color:#fff;border:none;
+    padding:6px 12px;border-radius:8px;font-size:12px;cursor:pointer;font-family:inherit;font-weight:700;}
+  .copybtn:active{transform:scale(.96);}
+  .small{font-size:12px;color:var(--sub);}
+  .flag{font-size:12px;background:#fdecc8;color:#8a5a00;padding:2px 8px;border-radius:6px;font-weight:700;}
+  .bt input,.bt select{font-family:inherit;font-size:14px;border:1px solid var(--line);border-radius:7px;padding:6px 8px;background:#fff;}
+  .bt input.lbl{width:100%;min-width:150px;}
+  .bt input.num{width:100px;text-align:right;}
+  .bt input.qty{width:64px;text-align:right;}
+  .bt td,.bt th{vertical-align:middle;}
+  .bt .sub{font-weight:700;text-align:right;white-space:nowrap;color:var(--accent2);}
+  .delrow{background:#fbeaea;color:#b23b3b;border:none;border-radius:6px;padding:6px 9px;cursor:pointer;font-weight:700;}
+  .addrow{background:var(--accent);color:#fff;border:none;border-radius:9px;padding:9px 16px;cursor:pointer;font-weight:700;font-family:inherit;margin-top:12px;font-size:14px;}
+  .rate{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:14px;}
+  .rate input{width:96px;text-align:right;}
+  .totcard{background:linear-gradient(135deg,#e05a2b,#c9451c);color:#fff;border-radius:14px;padding:18px;margin-top:16px;display:grid;gap:10px;grid-template-columns:repeat(3,1fr);}
+  @media(max-width:720px){.totcard{grid-template-columns:1fr;}}
+  .totcard .t{text-align:center;}
+  .totcard .t .v{font-size:23px;font-weight:900;letter-spacing:.5px;}
+  .totcard .t .k{font-size:12px;opacity:.92;margin-top:2px;}
+  .albumrow{border:1px solid var(--line);border-radius:12px;padding:16px;margin-bottom:12px;background:#fff;}
+  .albumtag{font-size:calc(var(--fs)*0.78);color:var(--sub);background:var(--soft);border-radius:999px;padding:3px 12px;white-space:nowrap;}
+  .albumspots{font-size:calc(var(--fs)*0.85);color:var(--sub);line-height:1.6;margin-bottom:10px;}
+  .albumempty{display:inline-block;font-size:calc(var(--fs)*0.8);color:#9a8f80;background:var(--soft);border:1px dashed var(--line);border-radius:10px;padding:8px 14px;}
+  .albumrow.filled{background:#f2f7f3;border-color:#cfe6cb;}
+  .pgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:4px;}
+  .pgrid a{display:block;position:relative;border-radius:8px;overflow:hidden;background:var(--soft);}
+  .pgrid img{display:block;width:100%;aspect-ratio:1/1;object-fit:cover;}
+  .albumhead{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:8px;}
+  .albumname{font-weight:800;color:var(--accent2);}
+    padding:14px 14px;background:#fffdf9;color:var(--ink);}
+  .albumopen{display:none;}
+  .albumrow.filled .albumopen{display:inline-block;}
+  .navbtn{display:inline-block;min-width:104px;text-align:center;padding:14px 18px !important;border-radius:12px;
+    font-weight:800 !important;color:#fff !important;text-decoration:none;box-shadow:0 2px 6px rgba(0,0,0,.18);white-space:nowrap;}
+  .navbtn:active{transform:scale(.97);}
+  .spotlist li{padding:14px 14px;}
+  a.mlink{display:inline-block;font-size:12px;text-decoration:none;color:#fff;background:var(--blue);padding:5px 10px;border-radius:8px;font-weight:600;white-space:nowrap;}
+  a.mlink:hover{filter:brightness(.92);}
+  .refgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;}
+  @media(max-width:720px){.refgrid{grid-template-columns:1fr;}}
+  .refgroup{display:flex;flex-direction:column;gap:7px;}
+  .refgroup .rt{font-weight:700;color:var(--accent2);margin-bottom:2px;}
+  .refgroup a{text-decoration:none;color:var(--ink);background:var(--soft);border:1px solid var(--line);border-radius:9px;padding:9px 12px;font-size:14px;}
+  .refgroup a:hover{border-color:var(--accent);color:var(--accent2);}
+  .cal{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;}
+  .cal .dow{text-align:center;font-size:12px;color:var(--sub);font-weight:700;padding:4px 0;}
+  .cal .cell{min-height:62px;border:1px solid var(--line);border-radius:8px;padding:5px 6px;font-size:12px;background:#fff;}
+  .cal .cell.empty{background:transparent;border:none;}
+  .cal .cell.trip{color:#fff;border:none;}
+  .cal .cell .dn{font-weight:800;font-size:13px;}
+  .cal .cell .rl{font-size:10px;line-height:1.25;margin-top:3px;opacity:.96;}
+  .cal .cell.wknd .dn{color:var(--accent2);}
+  .callegend{display:flex;flex-wrap:wrap;gap:12px;margin-top:12px;font-size:12px;color:var(--sub);}
+  @media(max-width:720px){.cal .cell{min-height:52px;padding:3px 4px;} .cal .cell .rl{font-size:9px;}}
+  .vd-ok{color:#137a37;font-weight:700;white-space:nowrap;}
+  .vd-mid{color:#8a5a00;font-weight:700;white-space:nowrap;}
+  .vd-no{color:#b23b3b;font-weight:700;white-space:nowrap;}
+  .spotlist li.daysep{display:block;background:transparent;border:none;padding:10px 0 2px;}
+  .spotlist .ds-h{font-weight:800;color:var(--accent2);font-size:14px;border-left:4px solid var(--accent);padding-left:8px;}
+  .optpill{font-size:10px;background:#f1eef7;color:#6b4bb0;border:1px solid #ddd2ee;border-radius:999px;padding:1px 7px;font-weight:700;}
+  .ckgroup{margin-bottom:16px;}
+  .ckgroup h3{font-size:15px;margin:0 0 8px;color:var(--accent2);border-left:4px solid var(--accent);padding-left:8px;}
+  .ck{display:flex;align-items:flex-start;gap:10px;padding:9px 12px;border:1px solid var(--line);border-radius:10px;background:#fff;margin-bottom:7px;cursor:pointer;}
+  .ck input{margin-top:2px;width:18px;height:18px;flex:0 0 auto;accent-color:var(--accent);cursor:pointer;}
+  .ck.done{background:#f2f7f3;border-color:#cfe6cb;}
+  .ck.done .cktext{text-decoration:line-through;color:var(--sub);}
+  .cktext{font-size:14px;}
+  .urgent{font-size:10px;background:#fdecc8;color:#8a5a00;border-radius:999px;padding:1px 7px;font-weight:800;margin-left:6px;white-space:nowrap;}
+  .urgent.hot{background:#fde2e2;color:#b23b3b;}
+  .ckbar{height:12px;background:#eee;border-radius:999px;overflow:hidden;margin:8px 0 4px;}
+  .ckbar > i{display:block;height:100%;background:linear-gradient(90deg,#e05a2b,#16a34a);width:0;transition:width .3s;}
+  .ckreset{background:none;border:1px solid var(--line);color:var(--sub);border-radius:8px;padding:5px 12px;font-size:12px;cursor:pointer;font-family:inherit;}
+  footer{margin-top:40px;text-align:center;color:var(--sub);font-size:12px;}
+  .stars{color:var(--gold);}
+  a.inline{color:var(--accent2);}
+
+  /* ===== 放大字級：最小 20px、關鍵項目 24px 起、隨視窗縮放、自動換行 ===== */
+  :root{ --fs: clamp(20px, 0.9vw + 15px, 25px); --fs-key: clamp(24px, 1.3vw + 17px, 32px); }
+  body{ font-size: var(--fs); overflow-wrap:break-word; }
+  p, li, td, th, label, a, .cktext, .spotlist .ds, .spotlist a, .small, .note, .warn,
+  .callegend, .legend, .kpi .l, .kpi .k, .totcard .t .k, .refgroup a, .refgroup .rt, .tab-btn,
+  .bt input, .bt select, .addrow, .ckreset, a.mlink, .flag, .hero .sub, .tag,
+  table, pre.msg, .rate, .ds-h { font-size: var(--fs) !important; }
+  h1{ font-size: clamp(30px, 3vw + 18px, 44px) !important; }
+  h2, h3, .card h3, .ckgroup h3, .kpi .n, .totcard .t .v, .ds-h { font-size: var(--fs-key) !important; }
+  .pill, .optpill, .urgent, .vd-ok, .vd-mid, .vd-no { font-size: calc(var(--fs) * 0.82) !important; }
+  td, th, li, p, .ds, .cktext, .note, .warn, .small { overflow-wrap:break-word; word-break:normal; }
+  /* 空間受限的小元件維持精簡（放大會使地圖標籤重疊、日曆爆版） */
+  .rnum{ min-width:24px; height:24px; line-height:20px; font-size:13px !important; }
+  .dnum{ min-width:30px; height:30px; line-height:30px; font-size:18px !important; }
+  .leaflet-tooltip.rnode, .rbadge{ font-size:12px !important; }
+  .cal .cell .rl{ font-size:15px !important; }
+  .cal .cell .dn{ font-size:18px !important; }
+  /* 分頁列：桌機強制 5+4 兩列；手機縮小字級自然排成兩列 */
+  @media(max-width:720px){
+    nav.toc .tab-btn{font-size:17px !important;padding:7px 9px !important;}
+    nav.toc .in{gap:6px;}
+    .tabbreak{display:none;}
+  }
+  /* 資訊卡字級：比例縮放，避免撐破 */
+  .kpi .k{font-size:calc(var(--fs)*0.72) !important;}
+  .kpi .n{font-size:calc(var(--fs)*1.02) !important;}
+  .kpi .n.nsm{font-size:calc(var(--fs)*0.86) !important;white-space:nowrap;}
+  .kpi .l{font-size:calc(var(--fs)*0.76) !important;}
+  .kpigrid{grid-auto-rows:1fr;}
+  .okgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;grid-auto-rows:1fr;}
+  @media(max-width:720px){.okgrid{grid-template-columns:1fr;}}
+  .ok{background:#f2f7f3;border:1px solid #cfe6cb;border-radius:10px;padding:12px 14px;
+    font-size:calc(var(--fs)*0.8);color:var(--sub);line-height:1.55;}
+  .ok b{display:block;color:#137a37;font-size:calc(var(--fs)*0.92);margin-bottom:2px;}
+  .ok b:before{content:"✓ ";font-weight:900;}
+  @media(max-width:720px){ .kpi{min-height:118px;padding:14px 10px;} }
+  /* ===== 各分頁氛圍浮水印 ===== */
+  .wrap > section{position:relative;isolation:isolate;}
+  .wrap > section::before{
+    content:"";position:absolute;top:-10px;right:4px;font-size:150px;line-height:1;
+    opacity:.055;z-index:-1;pointer-events:none;filter:grayscale(.2);}
+  #summary::before{content:"🍁";}
+  #cal-sec::before{content:"🗓";}
+  #route-sec::before{content:"⛰";}
+  #weather-sec::before{content:"🌤";}
+  #plan::before{content:"🚌";}
+  #map-sec::before{content:"🗺";}
+  #spots::before{content:"🧭";}
+  #cand-sec::before{content:"✨";}
+  #transport-sec::before{content:"✈";}
+  #van::before{content:"🚐";}
+  #minivan::before{content:"🚙";}
+  #hotel::before{content:"♨";}
+  #inquiry-sec::before{content:"📝";}
+  #budget-sec::before{content:"💴";}
+  #checklist-sec::before{content:"✅";}
+  #album-sec::before{content:"📷";}
+  #jp-sec::before{content:"💬";}
+  #ref-sec::before{content:"🔗";}
+  @media(max-width:720px){.wrap > section::before{font-size:110px;opacity:.05;}}
+  /* 頁面底紋 */
+  body{background-image:
+    radial-gradient(circle at 12% 8%, rgba(224,90,43,.045) 0, transparent 42%),
+    radial-gradient(circle at 88% 22%, rgba(124,58,237,.04) 0, transparent 40%),
+    radial-gradient(circle at 50% 92%, rgba(22,163,74,.035) 0, transparent 45%);
+    background-attachment:fixed;}
+  #deadline{background:#fff4e6;border-color:#f0b26b;}
+  #deadline.urgent{background:#fdecec;border-color:#e88;}
+  #deadline .dl-t{font-weight:900;color:var(--accent2);font-size:calc(var(--fs)*1.02);}
+  #deadline .dl-n{font-size:calc(var(--fs)*1.5);font-weight:900;color:#b23b3b;}
+  /* ===== 穿著 ===== */
+  .layer{display:grid;grid-template-columns:82px 1fr;gap:12px;align-items:start;
+    border:1px solid var(--line);border-radius:12px;padding:14px;margin-bottom:10px;background:#fff;}
+  .layer-n{background:var(--accent);color:#fff;border-radius:10px;text-align:center;
+    padding:10px 4px;font-weight:900;font-size:calc(var(--fs)*0.78);line-height:1.4;}
+  .layer-b{font-size:calc(var(--fs)*0.82);line-height:1.7;}
+  .layer-b b{color:var(--accent2);}
+  .must{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;}
+  @media(max-width:720px){.must{grid-template-columns:1fr;}}
+  .must div{background:#fff4e6;border:1px solid #f0b26b;border-radius:10px;padding:11px 13px;
+    font-size:calc(var(--fs)*0.8);line-height:1.6;}
+  .must b{display:block;color:var(--accent2);margin-bottom:2px;}
+  /* ===== 重點筆記 ===== */
+  .ntblock{border:2px solid var(--line);border-radius:14px;margin-bottom:18px;overflow:hidden;background:#fff;}
+  .nthead{background:var(--accent);color:#fff;padding:10px 16px;font-weight:900;font-size:calc(var(--fs)*1.0);}
+  .ntbody{padding:14px 16px;}
+  .ntitem{border-top:1px solid var(--line);padding-top:14px;margin-top:14px;}
+  .ntitem:first-child{border-top:0;padding-top:0;margin-top:0;}
+  .nttitle{font-weight:900;color:var(--accent2);font-size:calc(var(--fs)*0.95);margin-bottom:6px;}
+  .ntdesc{font-size:calc(var(--fs)*0.82);line-height:1.7;margin-bottom:8px;}
+  .ntplace{background:var(--soft);border-radius:8px;padding:10px 12px;font-size:calc(var(--fs)*0.78);line-height:1.7;margin-bottom:8px;}
+  .ntwarn{background:#fdecec;border:1px solid #e88;border-radius:8px;padding:10px 12px;font-size:calc(var(--fs)*0.8);line-height:1.7;margin-bottom:8px;}
+  /* ===== 日語小卡 ===== */
+  .jpday{margin:18px 0 10px;font-weight:900;color:#fff;background:var(--accent);
+    border-radius:10px;padding:8px 14px;display:inline-block;font-size:calc(var(--fs)*0.95);}
+  .jpcard{border:1px solid var(--line);border-radius:12px;padding:14px 16px;margin-bottom:12px;background:#fff;}
+  .jpwhen{font-size:calc(var(--fs)*0.8);color:var(--sub);font-weight:700;margin-bottom:8px;}
+  .jptext{font-size:calc(var(--fs)*1.08);line-height:1.85;font-weight:600;color:var(--ink);
+    background:#fffdf7;border:2px solid #f0d9b5;border-radius:10px;padding:14px 16px;white-space:pre-line;}
+  .jpzh{font-size:calc(var(--fs)*0.78);color:var(--sub);line-height:1.6;margin-top:8px;}
+  .jpcopy{margin-top:8px;font-size:calc(var(--fs)*0.75);border:1px solid var(--line);background:var(--soft);
+    border-radius:8px;padding:6px 14px;cursor:pointer;font-family:inherit;color:var(--sub);}
+  .jpcopy:active{background:#e8e0d4;}
+  /* ===== 飄落楓葉 ===== */
+  #leaves{position:fixed;inset:0;pointer-events:none;z-index:9;overflow:hidden;}
+  #leaves i{position:absolute;top:-8vh;display:block;will-change:transform;font-style:normal;
+    animation:leafFall linear infinite;user-select:none;}
+  @keyframes leafFall{
+    0%{transform:translate3d(0,-10vh,0) rotate(0deg);}
+    100%{transform:translate3d(var(--dx,40px),112vh,0) rotate(var(--rot,420deg));}
+  }
+  @media (prefers-reduced-motion: reduce){ #leaves{display:none;} }
+  @media(max-width:720px){ #leaves i{opacity:.4 !important;} }
+</style>
+</head>
+<body>
+<div id="leaves" aria-hidden="true"></div>
+
+<header class="hero">
+  <h1>2026 北海道 溫泉慢遊</h1>
+  <div class="sub">溫泉 ‧ 慢行 ‧ 露營車體驗　｜　5 人成行（媽媽・叔叔・嬸嬸・姑姑・駕駛）</div>
+  <div class="tag">🗓 2026 / 10 / 13（二） – 10 / 19（一）　7 天 6 夜</div>
+</header>
+
+<nav class="toc"><div class="in">
+  <button class="tab-btn" data-tab="overview">總覽</button>
+  <button class="tab-btn" data-tab="plan">行程</button>
+  <button class="tab-btn" data-tab="stay">交通住宿</button>
+  <button class="tab-btn" data-tab="weather">穿著</button>
+  <span class="tabbreak"></span>
+  <button class="tab-btn" data-tab="nav">導航</button>
+  <button class="tab-btn" data-tab="album">相簿</button>
+  <button class="tab-btn" data-tab="ref">參考</button>
+</div></nav>
+
+<div class="wrap">
+
+  <!-- 總覽 -->
+  <section id="summary" data-tab="overview" style="order:1">
+    <h2>🍁 行程總覽</h2>
+    <div class="grid g4 kpigrid">
+      <div class="kpi"><div class="k">旅行日期</div><div class="n">10/13 – 10/19</div><div class="l">7 天 6 夜</div></div>
+      <div class="kpi"><div class="k">航班・星宇直飛</div><div class="n nsm">去 09:00 → 13:55<br>回 15:00 → 18:25</div><div class="l">台中 ⇄ 新千歲</div></div>
+      <div class="kpi"><div class="k">用車</div><div class="n">6 <span class="u">天</span></div><div class="l">露營車 3 ＋ 客車 3</div></div>
+      <div class="kpi"><div class="k">露營車</div><div class="n">移動休息室</div><div class="l">隨時歇腳、用餐、賞景<br>夜宿飯店，不車泊</div></div>
+    </div>
+
+    <div class="note" style="margin-top:14px"><b>📇 隨身小卡 —— 一人一份，請印出來帶著</b>
+      <div class="small" style="margin-top:6px;color:inherit">A4 兩頁：三家飯店的日文地址與電話、走散時的求助日文、行程一覽、泡湯提醒。<b>走散時把卡片拿給店員或警察看，就能聯絡到我。</b><br>
+      <a class="inline" href="card.html" target="_blank">📇 開啟隨身小卡（可列印）↗</a>　手機上也讀得很清楚，但建議<b>印一份放隨身包</b>——手機沒電時還有紙本。</div>
+    </div>
+
+    <div class="card" style="margin-top:14px">
+      <h3 style="margin:0 0 10px">每日行程一覽</h3>
+      <div style="overflow-x:auto">
+      <table>
+        <thead><tr><th>日期</th><th>住宿</th><th>行程內容</th></tr></thead>
+        <tbody>
+          <tr><td class="day">10/13 二</td><td><b>千歲</b></td><td>抵達新千歲，專車入住千歲；<b>永旺購物中心就在飯店旁</b>，採買與晚餐都在這裡</td></tr>
+          <tr><td class="day">10/14 三</td><td><b>白金溫泉</b></td><td>領<b>露營車</b>北上，<b>占冠道之驛</b>休息、富良野午餐，午後<b>富田農場</b>，傍晚入住泡湯</td></tr>
+          <tr><td class="day">10/15 四</td><td>白金溫泉<br><span class="small">連泊</span></td><td><b>白鬚瀑布</b>、<b>青池</b>、<b>新榮之丘</b>，午後<b>旭山動物園</b>，返回旅館泡湯</td></tr>
+          <tr><td class="day">10/16 五</td><td><b>札幌</b></td><td>南下，<b>美瑛選果</b>，家人先放<b>三井 Outlet</b>；駕駛卸行李、還露營車後搭計程車會合，一起回札幌</td></tr>
+          <tr><td class="day">10/17 六</td><td>札幌<br><span class="small">連泊</span></td><td>改乘<b>7人座客車</b>，<b>小樽堺町通與運河</b>，晚間永旺採買</td></tr>
+          <tr><td class="day">10/18 日</td><td>札幌<br><span class="small">連泊</span></td><td><b>藻岩山</b>、迴轉壽司、<b>白色戀人公園</b>，晚間狸小路</td></tr>
+          <tr><td class="day">10/19 一</td><td>—</td><td>書店補買雜誌 → 10:38 退房出發，<b>鮭魚公園千歲</b>休息 → 加油、還車 → 接駁至機場，搭機返台</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <div class="small" style="margin-top:10px">住宿共 6 晚：<b>千歲 ×1、白金溫泉 ×2、札幌 ×3</b>，美瑛連泊 2 晚、札幌連泊 3 晚，<b>全程只換 2 次飯店</b>；<b>六晚住宿全部含早餐</b>，白金溫泉兩晚另含晚餐。全程<b>專車接送、不搭乘大眾運輸</b>。行程以<b>溫泉與慢行</b>為主軸，不趕景點。</div>
+    </div>
+
+    <div class="card" style="margin-top:14px">
+      <h3 style="margin:0 0 10px">本行程特色</h3>
+      <div class="okgrid">
+        <div class="ok"><b>行李免拖行</b>專車直達飯店門口，下車即入房</div>
+        <div class="ok"><b>全程專車接送</b>不搭乘大眾運輸，門到門</div>
+        <div class="ok"><b>只住 3 個地方</b>千歲 1 晚、白金連泊 2 晚、札幌連泊 3 晚</div>
+        <div class="ok"><b>夜宿飯店</b>不車泊，每晚均有暖氣</div>
+        <div class="ok"><b>溫泉</b>白金溫泉連泊 2 晚（旅館內湯）</div>
+        <div class="ok"><b>節奏從容</b>每日 2–3 個景點，傍晚即入住</div>
+        <div class="ok"><b>安心同行</b>備隨身聯絡卡與手機定位</div>
+        <div class="ok"><b>步行量低</b>每日步行 2 小時內，備輪椅</div>
+        <div class="ok"><b>車上即休息室</b>露營車備桌椅沙發，可隨時歇腳賞景</div>
+        <div class="ok"><b>早餐都含了</b>六晚住宿全附早餐，白金兩晚另含晚餐</div>
+        <div class="ok"><b>入境免填單</b>行前線上預辦，落地出示 QR 即可通關</div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- 行程日曆 -->
+  <section id="cal-sec" data-tab="overview" style="order:2">
+    <h2 id="calendar">🗓 行程日曆（2026 年 10 月）</h2>
+    <div class="card">
+      <div class="cal" id="cal"></div>
+      <div class="callegend">
+        <span>🚐 露營車 3 天（10/14–16）　🚙 客車 3 天（10/17–19）</span>
+        <span>露營車 10/14 約 09:00 取・10/16 約 18:00 還（原訂 15:30，行程延遲）</span>
+        <span>飯店：千歲 10/13　·　白金溫泉 10/14・15　·　札幌 10/16–18</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 地圖 -->
+  <section id="map-sec" data-tab="plan" style="order:5">
+    <h2 id="map">🗺 互動地圖</h2>
+    <div id="leafletmap"></div>
+    <div class="legend">
+      <span><span class="d" style="background:var(--blue)"></span>機場・取還車</span>
+      <span><span class="d" style="background:var(--biei)"></span>美瑛・紅葉</span>
+      <span><span class="d" style="background:var(--onsen)"></span>溫泉・湖畔</span>
+      <span><span class="d" style="background:var(--otaru)"></span>小樽</span>
+      <span><span class="d" style="background:var(--sapporo)"></span>札幌</span>
+      <span><span class="d" style="background:#c8973f"></span>候選（待評估）</span>
+    </div>
+    <div class="small" style="margin-top:6px">點地圖上任一標記 → 彈出視窗內有「Google 地圖導航」連結。標記位置為概略，導航連結指向正確地點。</div>
+  </section>
+
+  <!-- 日期路徑圖 -->
+  <section id="route-sec" data-tab="overview" style="order:3">
+    <h2 id="route">⛰ 日期路徑圖</h2>
+    <div class="card">
+      <div id="routemap"></div>
+      <div style="overflow-x:auto;margin-top:10px">
+      <table>
+        <thead><tr><th>天</th><th>日期</th><th>路段</th><th>交通</th><th>距離／預估車程</th></tr></thead>
+        <tbody>
+                    <tr><td><span class="dnum" style="background:#2563eb">①</span></td><td>10/13</td><td>新千歲機場 → 千歲飯店</td><td><span class="lsw" style="border-top:4px solid #2563eb"></span>🚕 計程車 2 台（GO 叫車）</td><td>約 10 分</td></tr>
+          <tr><td><span class="dnum" style="background:#e05a2b">②</span></td><td>10/14</td><td>千歲 → 占冠 → 富田農場 → 白金溫泉</td><td><span class="lsw" style="border-top:4px solid #e05a2b"></span>🚐 露營車</td><td>約 160 km／約 3h</td></tr>
+          <tr><td><span class="dnum" style="background:#d1491f">③</span></td><td>10/15</td><td>白鬚瀑布・青池・新榮之丘・旭山動物園</td><td><span class="lsw" style="border-top:4px solid #d1491f"></span>🚐 露營車</td><td>約 76 km</td></tr>
+          <tr><td><span class="dnum" style="background:#7c3aed">④</span></td><td>10/16</td><td>美瑛 → 三井 Outlet（先放大家）→ 札幌飯店卸行李 → 千歲還車 → 計程車回 Outlet 會合 → 札幌</td><td><span class="lsw" style="border-top:4px solid #7c3aed"></span>🚐 露營車＋🚕 計程車</td><td>約 190 km／約 4.5h</td></tr>
+          <tr><td><span class="dnum" style="background:#16a34a">⑤</span></td><td>10/17</td><td>札幌 → 小樽（堺町通・運河）→ 札幌</td><td><span class="lsw" style="border-top:4px solid #16a34a"></span>🚙 7人座客車</td><td>約 78 km／約 2h（來回）</td></tr>
+          <tr><td><span class="dnum" style="background:#0891b2">⑥</span></td><td>10/18</td><td>札幌 → 藻岩山 → 白色戀人公園 → 札幌</td><td><span class="lsw" style="border-top:4px solid #0891b2"></span>🚙 7人座客車</td><td>約 30 km／約 2h</td></tr>
+          <tr><td><span class="dnum" style="background:#6b7280">⑦</span></td><td>10/19</td><td>札幌 → 鮭魚公園千歲 → POPLAR 店還車 → 接駁至航廈</td><td><span class="lsw" style="border-top:4px solid #6b7280"></span>🚙 7人座客車</td><td>約 47 km／約 65 分</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <div class="callegend" style="margin-top:8px">
+        <span><span style="display:inline-block;width:28px;height:0;border-top:4px solid #888;vertical-align:middle;margin-right:5px"></span>自駕（露營車／客車）</span>
+        <span><span style="display:inline-block;width:28px;height:0;border-top:3px dashed #888;vertical-align:middle;margin-right:5px"></span>接駁（10/13 抵達）</span>
+      </div>
+      <div class="small" style="margin-top:6px">真實地圖底圖（OpenStreetMap，淡化至 60%）；地圖上 <b>②–⑥ 為每天移動路線</b>（①⑦ 機場接駁見下表），地名以細引線拉到旁邊標示。顏色對應下表。實際導航請用「行程」分頁互動地圖的 Google 地圖連結。</div>
+    </div>
+  </section>
+
+  <!-- 天氣 -->
+  <section id="weather-sec" data-tab="weather" style="order:1">
+    <h2>🧥 穿著提醒</h2>
+
+    <div class="warn"><b>保暖標準抓「初冬」，但我們全程自駕，實際要穿的比一般旅客少。</b>
+      <div class="small" style="margin-top:6px;color:inherit">10 月中的北海道夜間常低於 10°C。網路上「冷到受不了」的經驗多半來自等電車、走路轉乘、在月台吹風——這趟沒有這一段。</div>
+    </div>
+
+    <div class="card" style="margin-top:14px;background:#f2f7f3;border-color:#cfe6cb">
+      <h3 style="margin:0 0 10px;color:#137a37">🚗 全程自駕，不必穿得太厚重</h3>
+      <div class="small" style="line-height:1.8">
+        車門到店門，戶外時間分段且短；露營車與客車都有暖氣。<b>厚外套放車上，下車再套就好。</b>
+        <ul class="clean" style="margin-top:8px">
+          <li>身上「<b>內層＋中層</b>」就夠，外層備在車上</li>
+          <li><b>拉鍊式</b>外套優於套頭厚衣——一天上下車十幾次</li>
+          <li>車上備一袋：<b>圍巾、手套、毛帽、乾襪</b></li>
+        </ul>
+      </div>
+      <div class="note" style="margin-top:10px;background:#fff;border-color:var(--line)"><b>真正會冷的只有這四段</b>
+        <div style="overflow-x:auto;margin-top:8px">
+        <table><tbody>
+          <tr><td style="white-space:nowrap"><b>10/15 07:00</b></td><td>青池（山區、日出前 2–5°C）</td><td style="white-space:nowrap">約 40 分</td></tr>
+          <tr><td style="white-space:nowrap"><b>10/15 傍晚</b></td><td>新榮之丘夕照（開闊風大）</td><td style="white-space:nowrap">約 20 分</td></tr>
+          <tr><td style="white-space:nowrap"><b>10/17 午後</b></td><td>定山溪二見吊橋（溪谷風）</td><td style="white-space:nowrap">約 30 分</td></tr>
+          <tr><td style="white-space:nowrap"><b>10/18 全天</b></td><td>小樽運河・堺町通（靠海風大）</td><td style="white-space:nowrap">約 2 小時</td></tr>
+        </tbody></table>
+        </div>
+        <div class="small" style="margin-top:6px">其餘時間多在車上、旅館或室內。保暖火力集中在這四段即可。</div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:14px">
+      <h3 style="margin:0 0 10px">📅 每天怎麼穿</h3>
+      <div style="overflow-x:auto">
+      <table>
+        <thead><tr><th style="width:20%">日期</th><th>當天重點</th><th style="width:34%">穿法</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><b>10/13 二</b><br><span class="small">千歲</span></td>
+            <td>下午落地、計程車進飯店、永旺採買、車站周邊散步</td>
+            <td><b>內層＋薄外套</b>即可。<br><span class="small">幾乎都在室內與車上，這天最輕鬆。</span></td>
+          </tr>
+          <tr>
+            <td><b>10/14 三</b><br><span class="small">千歲→美瑛</span></td>
+            <td>取露營車、富田農場、四季彩之丘、入住白金溫泉</td>
+            <td><b>內層＋中層＋外套</b>。<br><span class="small">四季彩之丘在丘陵上、風大。傍晚往山上走，溫度會再降。</span></td>
+          </tr>
+          <tr style="background:#fff4e6">
+            <td><b>10/15 四</b><br><span class="small">美瑛</span><br><span style="color:#b23b3b;font-weight:800">全程最冷</span></td>
+            <td><b>07:00 青池</b>（2–5°C）、白鬚瀑布、午後丘陵、傍晚新榮之丘夕照</td>
+            <td><b>清晨三層全上＋圍巾、手套、毛帽</b>。<br><span class="small">回車上就能脫。傍晚看夕照再穿回去——這天就是「早晚厚、中午薄」。</span></td>
+          </tr>
+          <tr>
+            <td><b>10/16 五</b><br><span class="small">美瑛→札幌</span></td>
+            <td>退房南下、三井 Outlet、還露營車、搭計程車回札幌</td>
+            <td><b>內層＋中層</b>，好穿脫為主。<br><span class="small">幾乎整天在車上與車站，外套帶著就好。</span></td>
+          </tr>
+          <tr>
+            <td><b>10/17 六</b><br><span class="small">定山溪</span></td>
+            <td>取客車、二見吊橋、豐平峽溫泉、狸小路晚餐</td>
+            <td><b>三層＋圍巾</b>。<br><span class="small">溪谷有風。<b>泡完溫泉頭髮吹乾再出來</b>，外套帶進更衣室。</span></td>
+          </tr>
+          <tr style="background:#fff4e6">
+            <td><b>10/18 日</b><br><span class="small">小樽</span><br><span style="color:#b23b3b;font-weight:800">走最多</span></td>
+            <td>北大銀杏、小樽運河、堺町通、朝里川溫泉</td>
+            <td><b>三層＋圍巾＋好走的鞋</b>。<br><span class="small">小樽靠海、風大，體感比溫度低。這天戶外約 2 小時，是唯一需要「撐一整段」的日子。</span></td>
+          </tr>
+          <tr>
+            <td><b>10/19 一</b><br><span class="small">回台灣</span></td>
+            <td>場外市場早餐、開車到機場還車、搭機</td>
+            <td><b>好穿脫的一套</b>，厚外套收進行李。<br><span class="small">台中落地 18:25 約 25°C，機上與抵台後都用不到厚衣。</span></td>
+          </tr>
+        </tbody>
+      </table>
+      </div>
+      <div class="small" style="margin-top:10px"><b>看得出規律：</b>只有 <b>10/15 清晨</b>與 <b>10/18 小樽</b>要認真穿，其餘日子「內層＋中層＋車上備外套」就足夠。</div>
+    </div>
+
+    <div class="card" style="margin-top:14px">
+      <h3 style="margin:0 0 10px">洋蔥式三層</h3>
+      <div class="layer">
+        <div class="layer-n">內層<br>排汗</div>
+        <div class="layer-b"><b>發熱衣長袖，每人 3–4 件</b><br>
+        避免純棉，流汗後濕冷貼身。泡完溫泉務必換乾的。</div>
+      </div>
+      <div class="layer">
+        <div class="layer-n">中層<br>保暖</div>
+        <div class="layer-b"><b>刷毛外套或輕羽絨背心</b><br>
+        ⭐ 羽絨背心是這趟最實用的一件：軀幹保暖、手臂好活動、壓縮後不占行李。<br>
+        不建議厚毛衣——日本室內暖氣強，脫下來難收。</div>
+      </div>
+      <div class="layer">
+        <div class="layer-n">外層<br>擋風</div>
+        <div class="layer-b"><b>防風防潑水外套</b>（連帽佳）<br>
+        不必厚重羽絨大衣。北海道的冷主要是風冷，擋住風體感差很多。</div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:14px">
+      <h3 style="margin:0 0 10px">容易忘記但用得到</h3>
+      <div class="must">
+        <div><b>🧣 圍巾</b>比多一件外套有效，好收好脫。</div>
+        <div><b>🧤 薄手套</b>清晨青池才需要，放車上就好。</div>
+        <div><b>🧢 毛帽</b>清晨與傍晚很有感，同樣放車上。</div>
+        <div><b>👟 防水防滑鞋</b>不必雪靴。青池步道與溫泉區濕滑，抓地力優先。</div>
+        <div><b>🧦 厚襪</b>每天一雙乾的。腳濕了整天都冷。</div>
+        <div><b>☂️ 輕便雨具</b>摺疊傘或輕雨衣即可。</div>
+      </div>
+      <div class="small" style="margin-top:10px"><b>暖暖包不用從台灣帶</b>——10/13 在永旺順手買一包，更便宜好用。</div>
+    </div>
+
+    <div class="card" style="margin-top:14px">
+      <h3 style="margin:0 0 10px">這趟的四個狀況</h3>
+      <div style="overflow-x:auto">
+      <table>
+        <thead><tr><th style="width:26%">情境</th><th>做法</th></tr></thead>
+        <tbody>
+          <tr><td><b>清晨青池</b></td><td>三層全上，加圍巾手套毛帽。回車上就能脫。</td></tr>
+          <tr><td><b>泡完溫泉</b></td><td><b>頭髮吹乾再走出更衣室</b>，外套帶進去、出來直接穿上。這是最容易著涼的時刻。</td></tr>
+          <tr><td><b>上下車</b></td><td>穿好脫好穿的組合，拉鍊式外套＋背心最理想。</td></tr>
+          <tr><td><b>室內暖氣強</b></td><td>中層要能隨手脫掉塞包包。</td></tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:14px">
+      <h3 style="margin:0 0 10px">長輩的部分</h3>
+      <ul class="clean">
+        <li><b>比年輕人多一層</b>——羽絨背心最省事。</li>
+        <li><b>每人一條圍巾</b>，比多帶外套實用。</li>
+        <li><b>手套帽子放隨身小包</b>，不要收在行李箱底。</li>
+        <li><b>穿慣的鞋</b>，不要為這趟買新鞋。</li>
+      </ul>
+    </div>
+
+    <div class="note" style="margin-top:14px"><b>📦 每人這樣帶就夠</b>
+      <div class="small" style="margin-top:6px;color:inherit">發熱衣 3–4、刷毛或背心 1、防風外套 1、長褲 2–3、厚襪 4、圍巾 1、手套 1、毛帽 1、摺疊傘 1、泡湯小毛巾與防滑拖鞋。<br>
+      <b>7 天不必帶 7 套</b>——白金溫泉連泊兩晚可以手洗一次，札幌飯店還有<b>自助洗衣</b>（連住 3 晚）。少帶一半，回程才裝得下伴手禮。</div>
+    </div>
+
+    <h2 style="margin-top:26px">🌤 天氣參考</h2>
+    <div class="warn"><b>⚠️ 下表為歷史氣候平均（非即時預報）</b>，用來抓穿衣與行程節奏的大方向。<b>出發前 7–10 天請務必查「即時預報」再決定當天怎麼穿、要不要調整戶外時段</b>——連結見下方。</div>
+
+    <div class="card" style="margin-top:14px">
+      <h3 style="margin:0 0 10px;font-size:var(--fs-key)">10 月中旬 各地歷史氣候平均</h3>
+      <div style="overflow-x:auto">
+      <table>
+        <thead><tr><th>地點</th><th>白天均溫</th><th>夜間均溫</th><th>特徵</th><th>日期對應</th></tr></thead>
+        <tbody>
+          <tr><td><b>千歲・新千歲機場</b></td><td>約 14–16°C</td><td>約 6–8°C</td><td>沿海平原，日夜溫差中等</td><td>10/13・10/19</td></tr>
+          <tr><td><b>美瑛・白金</b></td><td>約 11–14°C</td><td>約 2–5°C</td><td>內陸盆地＋山區，<b>日夜溫差最大、清晨最冷</b></td><td>10/14・10/15</td></tr>
+          <tr><td><b>定山溪</b></td><td>約 11–14°C</td><td>約 3–6°C</td><td>山谷地形，早晚涼、溫泉正好</td><td>10/17</td></tr>
+          <tr><td><b>札幌市區</b></td><td>約 13–16°C</td><td>約 6–9°C</td><td>平地都市，較溫和</td><td>10/16–10/19</td></tr>
+          <tr><td><b>小樽</b></td><td>約 13–16°C</td><td>約 7–9°C</td><td>沿海，稍微溫和、風稍大</td><td>10/18</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <div class="note" style="margin-top:10px"><b>穿著建議：</b><b>10/15 清晨的美瑛（青池）可能只有 2–5°C</b>，為全程最低溫時段，建議採<b>洋蔥式穿法</b>：發熱衣、刷毛或羽絨背心、防風外套，並備帽子與手套。<b>每晚住宿均有暖氣</b>，車內亦有空調，無須擔心保暖。10 月北海道降雨機率中等，備輕便雨具或防風外套即可。</div>
+      <div class="note" style="margin-top:10px"><b>♨ 入浴注意事項：</b>本行程有 <b>4 次溫泉</b>：10/14・10/15 白金溫泉（旅館內湯與溪谷露天）、10/17 豐平峽／定山溪、10/18 朝里川。千歲與札幌的飯店是<b>房內衛浴、沒有大浴場</b>，泡湯集中在這四次。提醒事項：<b>單次浸泡 10–15 分鐘就起身</b>、水溫勿過高；<b>飯後、飲酒後、剛吃完藥先別泡</b>；泡前泡後都要<b>補充水分</b>；有高血壓／心臟疾病者先諮詢醫師，泡湯時<b>結伴不要單獨</b>。浴場地面濕滑，<b>務必穿防滑拖鞋、扶著扶手慢走</b>——這是最常見的意外。</div>
+      <div class="small" style="margin-top:8px">日落時間約在 <b>16:35–16:45</b>（10/13→10/19 逐漸提早），比夏天早很多——戶外景點建議安排在 16:00 前結束，避免摸黑走山路。</div>
+    </div>
+
+    <div class="card" style="margin-top:14px">
+      <h3 style="margin:0 0 10px;font-size:var(--fs-key)">出發前查即時預報</h3>
+      <div class="refgrid">
+        <div class="refgroup">
+          <a href="https://tenki.jp/forecast/1/02/" target="_blank">tenki.jp 北海道天氣 ↗</a>
+          <a href="https://www.jma.go.jp/bosai/forecast/#area_type=class20s&area_code=0110100" target="_blank">気象庁 官方預報（札幌）↗</a>
+        </div>
+        <div class="refgroup">
+          <a href="https://www.jma.go.jp/bosai/forecast/#area_type=class20s&area_code=0120600" target="_blank">気象庁 官方預報（美瑛／上川）↗</a>
+          <a href="https://www.windy.com/?43.062,141.354,7" target="_blank">Windy（風向／降雨雷達）↗</a>
+        </div>
+      </div>
+      <div class="small" style="margin-top:10px">若出發前預報顯示美瑛／定山溪有<b>初雪或路面結冰</b>機率，請重新確認露營車冬胎與行車路線（見「必問清單」）。</div>
+    </div>
+  </section>
+
+  <!-- 行程方案（採用版） -->
+  <section id="plan" data-tab="plan" style="order:4">
+    <h2>🚌 每日行程</h2>
+    <div class="small" style="margin-bottom:14px"><b>用車共 6 天：露營車 3 天 ＋ 7人座客車 3 天</b>。露營車＝<b>移動的休息室</b>（隨時停下來吃東西、小歇、看風景）。露營車（10/14–10/16）跑<b>美瑛</b>——去程、定點日、回程，中間那天完全不趕路；還回千歲後換客車（10/17–10/19）跑<b>小樽、藻岩山</b>短程圈。<b>每晚都住旅館、不車泊</b>；<b>最後三晚都在札幌</b>，10/19 自行開車到機場周邊還車，再搭租車公司免費接駁進航廈（航班 15:00 起飛，<b>11:00 從札幌出發</b>）。</div>
+
+    <div class="card">
+      <div style="margin-bottom:10px"><span class="pill rec">★ 採用</span> <b>露營車體驗美瑛 ＋ 7人座客車遊後段</b>　<span class="small">露營車 3 天只當「白天用車」跑美瑛環線、當晚一律住旅館，還車後換 7人座客車。</span></div>
+
+      <div class="grid kpigrid" style="grid-template-columns:repeat(3,1fr);margin-bottom:14px">
+        <div class="kpi"><div class="k">🚐 露營車</div><div class="n">3 <span class="u">天</span></div><div class="l">10/14–10/16<br>千歲取・千歲還</div></div>
+        <div class="kpi"><div class="k">🚙 7人座客車</div><div class="n">3 <span class="u">天</span></div><div class="l">10/17–10/19<br>札幌取・機場還</div></div>
+        <div class="kpi"><div class="k">住宿</div><div class="n">6 <span class="u">晚</span></div><div class="l">千歲1・白金2・札幌3</div></div>
+      </div>
+
+      <div style="overflow-x:auto">
+      <table>
+        <thead><tr><th>日期</th><th>定位</th><th>主要內容</th><th>車程</th></tr></thead>
+        <tbody>
+          <tr><td class="day">10/13 二</td><td>抵達・整裝</td><td><b>✈ JX318 台中 → 新千歲</b>（約 14:08 落地），搭<b>計程車</b>到千歲站飯店。傍晚步行 50 公尺到<b>永旺千歲店</b>用餐與採買，隔天上山要的飲料零食在此備齊。超市蘋果很厲害！！</td><td>接駁</td></tr>
+          <tr><td class="day">10/14 三</td><td>富良野・白金溫泉</td><td>約 09:00 領<b>露營車</b>，先回永旺補貨，<b>約 11:11 出發</b>。<b>占冠道之驛</b>（12:24–13:34，紅葉與休息）→ 富良野午餐（14:25–15:21）→ <b>富田農場</b>（15:42–16:36，哈密瓜切片已關門）→ 中富良野超市找哈密瓜，沒賣 → 約 <b>17:55</b> 抵<b>白金溫泉旅館</b>。晚餐自助式很厲害，有<b>骰子牛＋哈密瓜吃到飽</b>，隔壁桌的韓國小妹狂吃。</td><td>~3h<br><span class="small">約 160 公里</span></td></tr>
+          <tr><td class="day">10/15 四</td><td>美瑛・旭川</td><td>約 10:03 出發，先到<b>白鬚瀑布</b>與<b>青池</b>（青池 10:11–11:30）→ <b>新榮之丘</b>（11:56–12:17）→ 旭川拉麵午餐 → <b>旭山動物園</b>（14:14–16:57，企鵝、山羊、黑猩猩）→ 約 18:03 回白金溫泉，晚餐自助式，繼續觀察隔壁桌的韓國小妹狂吃哈密瓜。<b>連泊免整理行李</b>。</td><td>~2h<br><span class="small">約 76 公里</span></td></tr>
+          <tr><td class="day">10/16 五</td><td>南下札幌</td><td>約 10:12 退房南下，<b>美瑛選果</b>（10:42–11:21）→ 路上遇到<b>九點九級地震假警報</b>，嚇一大跳 → <b>岩見澤休息站</b>午餐 → 約 14:26 抵<b>三井 Outlet 札幌北廣島</b>，<b>先放家人在 Outlet 逛街</b>（14:26–15:27）。<b>駕駛獨自</b>開露營車到札幌飯店卸行李（約 16:07），再往千歲加油（17:42）、還露營車（約 18:00），<b>搭計程車回 Outlet 與家人會合，一起搭計程車回札幌飯店</b>（約 19:57）。<b>行程大延誤的狼狽日</b>，晚上 10 點才吃到<b>らーめん空 薄野店</b>的拉麵。</td><td>~4.5h<br><span class="small">約 190 公里（含駕駛往返千歲）</span></td></tr>
+          <tr><td class="day">10/17 六</td><td>小樽</td><td>約 10:23 取<b>客車</b>（薄野站前）出發，前往<b>小樽堺町通</b>（音樂盒堂、北菓樓，11:29–15:02）→ <b>小樽運河</b>（15:41–16:22）→ <b>永旺札幌發寒</b>採買 → 晚間回札幌飯店。<br><span class="small">原計畫的定山溪沒去，改成小樽。</span></td><td>~2h<br><span class="small">約 78 公里</span></td></tr>
+          <tr><td class="day">10/18 日</td><td>藻岩山・白色戀人</td><td>10:38 出發 → <b>藻岩山</b>纜車與山頂展望（11:02–13:09）→ <b>根室花まる 西野店</b>迴轉壽司（13:41–14:45，<b>吃到吐！！</b>）→ <b>白色戀人公園</b>（15:22–16:00）→ 永旺札幌發寒續逛 → 17:52 回飯店，藥妝採買。<b>無緣湯咖哩</b>，晚上又吃了<b>らーめん空 薄野店</b>，還狂走找女兒要的漫畫，沒找著。整理行李發現<b>護照遺失</b>，嚇破膽，還好順利找回！</td><td>~2h<br><span class="small">約 30 公里</span></td></tr>
+          <tr><td class="day">10/19 一</td><td>返回台灣</td><td>08:54 出門，步行到書店補買週刊雜誌，約 09:31 回飯店整理行李。<b>10:38 退房出發</b>，<b>約 11:44 抵道之驛 鮭魚公園千歲</b>（休息約 18 分，看鮭魚洄游）。接著加油，約 <b>12:22 抵新千歲機場 POPLAR 店還車</b>，搭<b>租車公司免費接駁車</b>到航廈。<b>✈ JX319 新千歲 15:00 → 台中</b>，約 18:40 平安抵達台中國際機場，<b>七天旅程圓滿結束</b>。</td><td>~65 分<br><span class="small">約 47 公里</span></td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <div class="note" style="margin-top:12px"><b>🧳 行李與住宿安排</b>
+        <div class="small" style="margin-top:6px;color:inherit">美瑛（10/14・15）與札幌（10/16・17）都是<b>連住兩晚不搬行李</b>，中間只需搬 2 次。10/16 抵達札幌後直接進飯店休息／逛街，行李一次搬進去即可，<b>不必陪著跑還車</b>。</div>
+      </div>
+
+      <div class="note" style="margin-top:12px"><b>🦀 10/19 最後一天・時程</b>
+      <div style="overflow-x:auto;margin-top:8px">
+      <table>
+        <tbody>
+          <tr><td style="white-space:nowrap;font-weight:800;color:var(--accent2)">08:30</td><td>開車到<b>場外市場</b>（約 10 分・有停車場）</td></tr>
+          <tr><td style="white-space:nowrap;font-weight:800;color:var(--accent2)">09:00</td><td>海鮮早餐＋買伴手禮</td></tr>
+          <tr><td style="white-space:nowrap;font-weight:800;color:var(--accent2)">10:30</td><td>回飯店拿行李、退房（11:00 前）</td></tr>
+          <tr><td style="white-space:nowrap;font-weight:800;color:var(--accent2)">11:00</td><td>出發往機場（約 50 分）</td></tr>
+          <tr><td style="white-space:nowrap;font-weight:800;color:var(--accent2)">12:00</td><td><b>還車</b> → 接駁 → <b>12:40 抵達航廈</b></td></tr>
+        </tbody>
+      </table>
+      </div>
+      <div class="small" style="margin-top:6px">場外市場 06:00 開市、多數店家 14:00 前後打烊，早上最新鮮。走道平坦但攤位密集，人多時留意彼此。</div>
+    </div>
+
+    <div class="note" style="margin-top:12px"><b>🐧 備案：旭山動物園 —— 10/15 早上看大家精神再決定</b>
+      <div class="small" style="margin-top:6px;color:inherit">
+        不用預約、現場買票、不影響住宿（白金溫泉連泊兩晚，當天來回）。<br>
+        <b>若要去：</b>07:00 青池＋白鬚瀑布 → 08:30 出發 → <b>09:30 開園就進場</b> → <b>進門租輪椅</b>、只看重點（北極熊・企鵝・海豹）約 1.5–2 小時 → 12:00 東川町午餐（北之住居設計社／PAACHI 順路）→ 14:00 回白金溫泉泡湯。<br>
+        <b>代價：</b>放掉拼布之路與新榮之丘（本來就是可選），且 10/15 不再是純休息日。動物園<b>蓋在山坡上、上下坡多</b>，務必租輪椅、不要全園走完。
+      </div>
+    </div>
+
+    <div class="warn" style="margin-top:12px"><b>🚗 換車怎麼接 —— 長輩全程不必移動，兩趟都我一個人跑</b>
+        <ul class="clean" style="margin-top:6px">
+          <li><b>10/16（實際）</b>：美瑛 → 札幌，<b>先把家人放在三井 Outlet 逛街</b> → <b>我獨自</b>開露營車到札幌飯店卸行李（約 16:07）→ 開往千歲加油、還露營車（約 18:00）→ <b>搭計程車回三井 Outlet 與家人會合</b> → <b>一起搭計程車回札幌飯店</b>（約 19:57）。
+            <div class="small" style="margin-top:6px;color:inherit">行程大延誤的一天，沒有搭 JR。原定「先送到飯店、還車後搭 JR 回札幌」的方案沒用上。</div>
+          </li>
+          <li><b>10/17</b>：<b>我獨自走路</b>到 <b>Toyota 地鐵薄野站前店</b>（飯店步行約 5 分）→ <b>約 10:23 取車</b> → 開回飯店接大家 → 出發<b>小樽</b>（原訂定山溪，改成小樽）。<div class="small" style="margin-top:6px;color:inherit">取車點已從原本的宮之森店改到薄野站前店，不必再搭計程車，走路就到。</div></li>
+          <li><b>頭尾機場接送</b>：用<b>飯店接駁</b>或<b>大型計程車</b>（5人＋行李一車，約 10 分）。</li>
+        </ul>
+      </div>
+
+      <div class="grid g2" style="margin-top:12px">
+        <div class="note"><b>此安排的優點：</b>
+          <ul class="clean" style="margin-top:4px">
+            <li>每晚正常床＋獨立衛浴，睡眠品質更穩定</li>
+            <li>不必受露營場營業季、電源、就寢定員等限制</li>
+            <li>後段全程自駕，不用扛行李轉乘 JR</li>
+          </ul>
+        </div>
+        <div class="warn"><b>需留意之處：</b>
+          <ul class="clean" style="margin-top:4px">
+            <li>露營車<b>車高 3.15m</b>，進停車場、加油站前都要先看限高</li>
+            <li><b>多一次租還車手續</b>（兩台車、兩次交接），10/16 與 10/17 之間銜接要抓寬裕時間</li>
+            <li>兩段租車各有基本費，總車資略高於單租一台</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="small" style="margin-top:10px">全程住宿共 <b>6 晚 3 地</b>：千歲 ×1（10/13）、白金溫泉 ×2（10/14・10/15）、札幌 ×3（10/16–18），<b>全部訂妥、全部含早餐</b>。各飯店房型、餐食與停車細節見「<b>交通住宿</b>」分頁。</div>
+    </div>
+  </section>
+
+  <!-- 露營車 -->
+  <!-- 交通方式 -->
+  <section id="transport-sec" data-tab="stay" style="order:7">
+    <h2>✈ 交通方式</h2>
+    <div class="card">
+      <div style="overflow-x:auto">
+      <table>
+        <thead><tr><th>日期</th><th>交通</th><th>路段</th><th>時間／說明</th></tr></thead>
+        <tbody>
+          <tr><td>10/13（二）</td><td>✈ 星宇 JX318</td><td>台中清泉崗 → 新千歲</td><td>09:00 → 13:55 落地</td></tr>
+          <tr><td>10/13</td><td>🚕 計程車 2 台</td><td>新千歲機場 → 千歲站飯店</td><td>約 10 分（免搭電車）<br><span class="small">現場沒有大型計程車，用 <b>GO 叫車 App</b> 立刻叫了兩台，分乘</span></td></tr>
+          <tr><td>10/14–10/16</td><td>🚐 露營車（NOMAD ZIL520）</td><td>千歲 → 白金溫泉 → 美瑛 → <b>三井 Outlet（先放大家）</b> → 札幌飯店卸行李 → 千歲原點還車</td><td>10/14 約 09:00 取・10/16 約 18:00 還（原訂 15:30，延遲）・共 3 天</td></tr>
+          <tr><td>10/16</td><td>🚕 計程車</td><td>千歲 NOMAD → 三井 Outlet（駕駛一人），再與家人一起 → 札幌飯店</td><td>還完露營車後直接搭計程車會合<br><span class="small">沒有搭 JR；兩段計程車費見費用記帳</span></td></tr>
+          <tr><td>10/17–10/19</td><td>🚙 7人座客車 <b>TOYOTA NOAH</b><br><span class="small">很可以買！！！</span></td><td><b>地鐵薄野站前店取車</b>（飯店步行 5 分）→ 小樽 → 藻岩山・白色戀人公園 → 鮭魚公園千歲 → <b>新千歲機場 POPLAR 店還車</b></td><td>10/17 約 <b>10:23</b> 取・10/19 約 <b>12:22</b> 還・共 3 天<br><span class="small">甲地租乙地還，已於官網訂妥</span></td></tr>
+          <tr><td>10/19</td><td>🚌 租車公司免費接駁</td><td>租車公司 → 新千歲機場航廈</td><td>約 10 分・全家同行</td></tr>
+          <tr><td>10/19（一）</td><td>✈ 星宇 JX319</td><td>新千歲 → 台中清泉崗</td><td>15:00 → 18:25（實際約 18:40 抵達台中）</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <div class="warn" style="margin-top:10px"><b>✈ 台中直飛札幌・星宇獨飛</b>
+        <div class="small" style="margin-top:6px;color:inherit">去 JX318 09:00→13:55／回 JX319 15:00→18:25。每週一二三五六飛（<b>週四、週日停飛</b>）。此航線 <b>2026/10/02 才首航</b>，班表仍可能微調。<b>回程 15:00，最後一天 11:00 就要從札幌出發。</b></div>
+      </div>
+
+      <div class="note" style="margin-top:10px"><b>✅ 全程不搭大眾運輸：</b>去程從機場到飯店用 GO 叫了<b>兩台計程車</b>分乘（約 10 分）；回程還完車由<b>租車公司免費接駁</b>直接載進航廈。中段全部自駕、門到門。10/16 家人先放三井 Outlet，駕駛獨自卸行李、還露營車後搭計程車會合，<b>全程沒有搭 JR</b>。</div>
+      
+    </div>
+  </section>
+
+  <!-- 露營車 -->
+  <section id="van" data-tab="stay" style="order:8">
+    <h2>🚐 露營車 — NOMAD ZIL520</h2>
+    <div class="card">
+      <div class="grid g4 kpigrid" style="margin-bottom:12px">
+        <div class="kpi"><div class="k">乘車定員</div><div class="n">6 <span class="u">人</span></div><div class="l">我們 5 人・座位寬鬆</div></div>
+        <div class="kpi"><div class="k">車內</div><div class="n">桌椅・沙發</div><div class="l">隨時坐著吃東西、小歇</div></div>
+        <div class="kpi"><div class="k">租用期間</div><div class="n">10/14 – 10/16</div><div class="l">3 天・千歲原點取還</div></div>
+        <div class="kpi"><div class="k">千歲店評價</div><div class="n"><span class="stars">★</span> 4.7</div><div class="l">43 則評論</div></div>
+      </div>
+      <b>取還車地點：</b>北海道千歲市青葉2丁目17-32（距 JR 千歲站約 450 公尺・車程 3 分・步行約 10 分平路）<br><b>🚶 10/14 取車走路過去</b>（約 450 公尺、8–10 分鐘平路）；<b>10/16 還車後搭計程車</b>去三井 Outlet 與家人會合。
+      <a class="inline" href="https://www.google.com/maps/search/?api=1&query=%E5%8C%97%E6%B5%B7%E9%81%93%E5%8D%83%E6%AD%B3%E5%B8%82%E9%9D%92%E8%91%892%E4%B8%81%E7%9B%AE17-32" target="_blank">（地圖）</a>
+
+      
+      <div class="small" style="margin-top:8px">駕駛提醒：ZIL520 是車高約 3m 的「駕駛艙型（Cab Con）」，比廂型車高寬。注意限高、側風、倒車，第一天先在空曠處熟悉車身。<br><b>⛽ 燃料是「軽油」（柴油），不是汽油</b>——NOMAD 要求還車前加滿；日本加油機<b>軽油是綠色油槍</b>，加錯油保險多半不賠。</div>
+      <div class="note" style="margin-top:10px"><b>🛋 露營車＝移動的休息室，景點之間的空檔本身就是休息時間</b>
+        <ul class="clean" style="margin-top:4px">
+          <li><b>隨時可以停下來休息</b>——看到漂亮的風景就靠邊停，坐在車裡吃東西、泡茶、聊天，不必找餐廳或咖啡廳。</li>
+          <li><b>累了就上車躺一下</b>——有沙發、床鋪可以躺著小歇，不用硬撐到下一個景點。</li>
+          <li><b>下雨、風大也不怕</b>——車內有空調，是隨身帶著的避風港。</li>
+          <li><b>行李隨車</b>——外套、藥品、熱水都在身邊，不用背在身上走。</li>
+        </ul>
+        這是一般轎車或遊覽車做不到的：<b>景點之間的空檔，本身就變成舒服的休息時間。</b>
+      </div>
+
+      <h3 style="margin:16px 0 8px;font-size:15px">🔌 車上有什麼・要自己帶什麼</h3>
+      <div style="overflow-x:auto">
+      <table>
+        <thead><tr><th>項目</th><th>車上狀況</th><th>怎麼用</th></tr></thead>
+        <tbody>
+          <tr><td><b>瓦斯爐</b></td><td><span class="vd-ok">✅ 有</span></td><td>可以燒水煮東西。<b>取車時請店員示範一次</b>（日語小卡已備）</td></tr>
+          <tr><td><b>冰箱</b></td><td><span class="vd-ok">✅ 有・90 公升</span></td><td>冷藏冷凍都有，永旺買的東西直接放</td></tr>
+          <tr><td><b>流理台／水槽</b></td><td><span class="vd-mid">⚠️ 冬季停用</span></td><td><b>10 月中的北海道很可能已經關水防凍</b>。<b>飲用水一定要自己帶</b></td></tr>
+          <tr><td><b>微波爐</b></td><td><span class="vd-mid">⚠️ 有，但多半用不了</span></td><td>耗電大，通常要接營地外部電源才能用。我們不住營地</td></tr>
+          <tr><td><b>100V 插座</b></td><td><span class="vd-mid">⚠️ 有，功率有限</span></td><td>充手機沒問題；<b>1000W 的電熱水壺幾乎確定帶不動</b>。車上有電壓表，隨時看剩餘電量</td></tr>
+          <tr><td><b>暖氣</b></td><td><span class="vd-ok">✅ FF 暖房＋室內冷氣</span></td><td>燃油式暖房，停車時也能開，不怕冷</td></tr>
+          <tr><td><b>簡易馬桶</b></td><td><span class="vd-mid">⚠️ 有，但要自己清</span></td><td>以休息站廁所為主，<b>真的來不及才用</b></td></tr>
+          <tr><td><b>淋浴</b></td><td><span class="vd-bad">❌ 禁止使用</span></td><td>每晚都住旅館，用不到</td></tr>
+          <tr><td>其他</td><td colspan="2">電視、AM/FM、多語導航、倒車鏡頭、停車聲納、行車記錄器、ETC、大型排氣扇；後方雙層床與閣樓床（閣樓有燈、插座、USB）</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <div class="note" style="margin-top:10px"><b>🫖 想在車上喝熱的，帶「保溫壺」最保險</b>
+        <div class="small" style="margin-top:6px;color:inherit">
+        <b>不要帶電熱水壺</b>——車上 100V 來自副電池，功率不足，燒不動。<br>
+        <b>最簡單的做法</b>：早上在飯店把保溫壺裝滿熱水，整天都能泡茶泡咖啡，不用動到車上任何設備。<br>
+        要用瓦斯爐燒也可以，但<b>水和水壺都要自己準備</b>（水槽冬季停用），而且行進間不能開火。</div>
+      </div>
+
+      <div class="note" style="margin-top:10px"><b>🛒 10/13 傍晚永旺要買的（車上用）</b>
+        <div class="small" style="margin-top:6px;color:inherit">
+        <b>瓶裝水（最重要，水槽可能停用）</b>・保溫壺或保溫瓶・濕紙巾與垃圾袋・
+        即食與不怕冷的零食（飯糰、麵包、水果）・紙杯紙巾・茶包或即溶咖啡。<br>
+        冰箱有 90 公升，<b>買多一點沒關係</b>；白金溫泉山上沒有便利商店。</div>
+      </div>
+
+      <div class="note" style="margin-top:10px"><b>👥 5 人乘坐 ZIL520：</b>乘車定員 6 人（含駕駛），5 人坐<b>相當寬鬆</b>；因為<b>不在車上過夜</b>，上層臥舖與後方床鋪可直接<b>當行李置放空間</b>，收納完全不成問題。每晚行李搬進旅館即可，建議仍以軟袋為主方便搬運。</div>
+    </div>
+  </section>
+
+  <!-- 飯店動線 -->
+  <!-- 7人座客車 -->
+  <section id="minivan" data-tab="stay" style="order:9">
+    <h2>🚙 7人座客車（10/17–10/19）</h2>
+    <div class="card">
+      <div class="grid kpigrid" style="grid-template-columns:repeat(3,1fr);margin-bottom:14px">
+        <div class="kpi"><div class="k">租期</div><div class="n">3 <span class="u">天</span></div><div class="l">10/17 10:00 薄野取<br>10/19 12:00 機場還</div></div>
+        <div class="kpi"><div class="k">車型</div><div class="n">7–8 人座</div><div class="l">5 人乘坐<br>第三排收起放行李</div></div>
+      </div>
+
+      <div class="card" style="background:#f2f7f3;border-color:#cfe6cb;margin-bottom:14px"><b style="color:#137a37">✅ 已訂</b>
+        <div style="overflow-x:auto;margin-top:8px">
+        <table><tbody>
+          <tr><th style="width:32%">租車公司</th><td><b>Toyota Rent a Car</b>（官網直訂）・車款 NOAH／VOXY 級距</td></tr>
+          <tr><th>取車</th><td><b>10/17（六）10:00</b>　地鐵薄野站前店・<b>飯店步行約 5 分</b></td></tr>
+          <tr><th>還車</th><td><b>10/19（一）12:00</b>　新千歲機場 POPLAR 店・還車後<b>免費接駁到航廈</b></td></tr>
+          <tr><th>規格</th><td>乘載 7 人・含 ETC 與英語 GPS（免費）</td></tr>
+        </tbody></table>
+        </div>
+      </div>
+
+      <h3 style="margin:0 0 10px">車型比較（5 人＋5 個行李箱）</h3>
+      <div class="warn" style="margin-bottom:10px"><b>🚨 訂車最關鍵一件事：一定要指定「8 人座」</b>
+        <div class="small" style="margin-top:6px;color:inherit">
+        <b>8 人座</b>＝2＋<b>3</b>＋3，我們 5 人坐前兩排，<b>第三排整排收起來放行李</b> ✅<br>
+        <b>7 人座</b>＝2＋<b>2</b>（獨立座椅）＋3，第二排只坐 2 人 → <b>第 5 人得坐第三排，行李空間直接歸零</b> ❌<br>
+        <span style="color:#9a6b00">第三排使用中時，行李區深度只剩約 270mm，放不下行李箱。</span></div>
+      </div>
+      <div style="overflow-x:auto">
+      <table>
+        <thead><tr><th>項目</th><th>Toyota NOAH／VOXY</th><th>Nissan SERENA</th></tr></thead>
+        <tbody>
+          <tr><th>車高</th><td>約 1,895mm</td><td>約 1,870mm<br><span class="vd-ok">略低，2.0m 限高更寬鬆</span></td></tr>
+          <tr><th>車長</th><td>4,695mm</td><td>4,690–4,765mm</td></tr>
+          <tr><th>第三排收起後</th><td><span class="vd-ok">✅ 原廠明示可放<b>行李箱 ×5</b></span><br><span class="small">（4–5 人乘車・3泊4日示例）</span></td><td>原廠未公布收起後數值<br><span class="small">機構同為左右上掀，實際空間相近</span></td></tr>
+          <tr><th>第三排使用中</th><td>深度 270mm／298L</td><td>283L／大型行李箱 2 個</td></tr>
+          <tr><th>特色</th><td>—</td><td><b>雙開式後門</b><br><span class="small">後窗可單獨開啟，停車位窄時取放行李方便</span></td></tr>
+        </tbody>
+      </table>
+      </div>
+      <div class="note" style="margin-top:10px"><b>結論：兩台都夠用，前提是 8 人座。</b>
+        <div class="small" style="margin-top:6px;color:inherit">NOAH 有原廠「可放 5 個行李箱」的明確背書；SERENA 車身略低、且<b>後窗可單獨開啟</b>，在飯店窄車位取行李較方便。<b>以實際庫存與價格決定即可。</b><br>
+        <b>好消息：</b>10/17、10/18 行李都放在飯店（連泊 3 晚），<b>只有 10/19 去機場那趟</b>需要全部上車，且只開 50 分鐘。</div>
+      </div>
+
+      <h3 style="margin:16px 0 10px">升級選項</h3>
+      <div class="small" style="margin-bottom:10px"><b>Toyota ALPHARD／VELLFIRE</b>：第二排獨立座椅、乘坐最舒適，但<b>價格約兩倍</b>、車長 4,995mm 幾乎頂到路邊停車場 5m 上限，<b>不建議</b>。</div>
+
+    </div>
+  </section>
+
+  <section id="hotel" data-tab="stay" style="order:10">
+    <h2>♨ 住宿與溫泉</h2>
+    <div class="card">
+      <b>飯店配置：千歲 ×1 ＋ 白金溫泉 ×2 ＋ 札幌 ×3</b>
+      <ul class="clean">
+        <li><b>10/13 千歲</b>：千歲站飯店・<b>JR千歲站直結</b>，隔天早上下樓就能讓露營車來接。<b>含早餐</b>。</li>
+        <li><b>10/14・10/15 白金溫泉</b>：碧之美 YUYU・連泊 2 晚・<b>含早餐與晚餐</b>。</li>
+        <li><b>10/16–10/18 札幌</b>：Holiday Inn Express 薄野・2 間房<b>連泊 3 晚</b>免整理行李・<b>含早餐</b>。</li>
+        <li><b>10/19</b>：全家共乘客車到機場旁的租車公司（約 50 分）還車，再搭<b>租車公司免費接駁</b>一起進航廈。</li>
+      </ul>
+      <div class="small" style="margin-top:6px">全程<b>只住 3 個地方</b>（千歲 1 晚 → 白金 2 晚 → 札幌 3 晚），行李只需整理 3 次。
+
+      <h3 style="margin:18px 0 8px;font-size:15px">三家飯店明細</h3>
+      <div class="note" style="margin-bottom:12px"><b>🛏 三家都訂好了，六晚全部含早餐</b>
+        <div class="small" style="margin-top:6px;color:inherit">千歲 5 人 1 室（78 ㎡）／白金溫泉 5 人 1 室和室（一泊二食）／札幌 2 間房連住 3 晚。房型、餐食與停車條件見下表。</div>
+      </div>
+
+      <div style="font-weight:700;color:var(--accent2);margin:6px 0 4px">① 千歲（10/13・1 晚）<span class="pill rec">✅ 已訂</span></div>
+      <div class="card" style="background:#f2f7f3;border-color:#cfe6cb">
+        <div style="font-weight:800;font-size:calc(var(--fs)*1.05);color:#137a37;margin-bottom:8px">千歲站飯店（千歳ステーションホテル）</div>
+        <div style="overflow-x:auto">
+        <table><tbody>
+          <tr><th>入住 / 退房</th><td><b>10/13（二）14:00–23:00</b> ／ <b>10/14（三）11:00 前</b></td></tr>
+          <tr><th>房型</th><td><b>1 間房・5 位成人・78 ㎡</b>・禁菸・有窗</td></tr>
+          <tr><th>餐食</th><td>✅ <b>含 5 客早餐</b>（10/14 早上・和洋自助式）<br><span class="small">10/14 08:45 要出門取露營車，早餐開始時間已向飯店確認</span></td></tr>
+          <tr><th>浴室</th><td>房內衛浴（館內無大浴場）</td></tr>
+          <tr><th>位置</th><td><b>JR千歲站直結</b>・距永旺步行約 3 分<br>〒066-0062 千歳市千代田町7丁目1789-3・☎ +81-123-49-3000</td></tr>
+        </tbody></table>
+        </div>
+      </div>
+      <div class="note" style="margin-top:10px"><b>👍 這個位置最理想</b>：車站直結 →（一）10/14 早上下樓就能讓 NOMAD 接，不用走路；（二）永旺在西口步行 2 分，採買方便。</div>
+      <div class="note" style="margin-top:10px"><b>🛒 10/13 傍晚：永旺採買</b>
+        <div class="small" style="margin-top:6px;color:inherit"><b>隔天上白金溫泉，山上沒有便利商店</b>——飲料、零食、常備藥在此買齊。<b>永旺千歲</b>（栄町6丁目51）1F 食品賣場開到 <b>21:45</b>。<br>想散步：<b>印第安水車</b>（車站步行 10 分・10 月鮭魚洄游）與<b>鮭魚公園千歲</b>（15 分）。</div>
+      </div>
+
+      <div style="font-weight:700;color:var(--accent2);margin:16px 0 4px">② 美瑛・白金溫泉（10/14・10/15）<span class="pill rec">✅ 已訂</span></div>
+      <div class="card" style="background:#f2f7f3;border-color:#cfe6cb">
+        <div style="font-weight:800;font-size:calc(var(--fs)*1.05);color:#137a37;margin-bottom:8px">碧之美 YUYU（Biei Shirogane Onsen AONOBI YUYU）</div>
+        <div style="overflow-x:auto">
+        <table>
+          <tbody>
+            <tr><th style="width:30%">入住 / 退房</th><td><b>10/14（三）15:00 起</b>入住 ／ <b>10/16（五）10:00 前</b>退房<br><span class="small">含晚餐方案<b>最晚 19:00 前</b>要辦好入住</span></td></tr>
+            <tr><th>房型</th><td><b>日式房－總館（和室）・5 人 1 間・2 晚</b>（連泊免整理行李）</td></tr>
+            <tr><th>餐食</th><td><b>含早餐＋晚餐</b>（一泊二食，兩晚都含）・<b>自助式</b>，地下 1 樓「藍の森」<br><b>晚餐 18:00–21:00</b>（最後入場 20:00）　<b>早餐 7:00–9:00</b>（最後入場 8:30）<br><span class="small">不提供房內用餐</span></td></tr>
+            <tr><th>溫泉</th><td><b>源泉 100% 掛流</b>・52℃ 不加水不加溫・<b>溪谷露天風呂</b>；素有「忘杖之湯」美名（泡完連拐杖都忘了拿）</td></tr>
+            <tr><th>房內設備</th><td>私人衛浴（浴缸／淋浴）、免治馬桶、暖氣空調、冰箱、電熱水壺、吹風機、空氣清淨機、榻榻米</td></tr>
+            <tr><th>位置</th><td>距<b>青池約 5 分</b>、美瑛車站約 20 分、旭川約 60 分</td></tr>
+            </tbody>
+        </table>
+        </div>
+      </div>
+
+      <div class="warn" style="margin-top:10px"><b>入住前要先確認／注意的 4 件事</b>
+        <ul class="clean" style="margin-top:6px">
+          <li><b>🚐 露營車停車</b>：ZIL520 <b>車高約 3 公尺</b>，請先電話確認停車場<b>有無限高或棚架</b>。<span class="vd-mid">最重要</span></li>
+          <li><b>🛏 和室是鋪榻榻米被褥</b>：從地板起身對長者較吃力，可先請旅館<b>加厚墊被</b>，或詢問能否備<b>簡易床架</b>。</li>
+          <li><b>🍽 晚餐是自助式，18:00–21:00（最後入場 20:00）</b>——不是固定開席，<b>時間比想像中寬鬆</b>。只要注意<b>含晚餐方案最晚 19:00 前要辦好入住</b>。10/15 去旭山動物園也來得及回來吃。</li>
+          <li><b>⏰ 10:00 退房</b>：10/16 要南下札幌，<b>10 點前務必出發</b>，時間剛好，別賴床。</li>
+        </ul>
+      </div>
+      <div class="small" style="margin-top:8px">山區<b>附近沒有便利商店</b>，飲料零食請在美瑛市區或富良野先買齊。兩晚都含晚餐，不必另找餐廳。</div>
+
+      <div style="font-weight:700;color:var(--accent2);margin:14px 0 4px">③ 札幌（10/16・10/17・10/18・共 3 晚）<span class="pill rec">✅ 已訂</span></div>
+      <div class="card" style="background:#f2f7f3;border-color:#cfe6cb">
+        <div style="font-weight:800;font-size:calc(var(--fs)*1.05);color:#137a37;margin-bottom:8px">Holiday Inn Express 札幌薄野 by IHG</div>
+        <div style="overflow-x:auto">
+        <table>
+          <tbody>
+            <tr><th style="width:30%">入住 / 退房</th><td><b>10/16（五）15:00–24:00</b> 入住 ／ <b>10/19（一）11:00 前</b>退房</td></tr>
+            <tr><th>房型</th><td><b>2 間客房・3 晚</b>（連泊免整理行李）</td></tr>
+            <tr><th>餐食</th><td><b>每天免費早餐</b>（10/17・10/18・10/19 三個早上都有）</td></tr>
+            <tr><th>館內</th><td>2026 年夏新開幕・<b>自助洗衣</b>、健身房、咖啡吧<br><span class="small">房內衛浴，館內無大浴場</span></td></tr>
+            <tr><th>位置</th><td>地鐵薄野站步行 5 分・札幌站地鐵 7 分・<b>狸小路走路就到</b>・機場車程約 40 分</td></tr>
+            <tr><th>停車</th><td>¥2,000／晚・<b>限高 2.0m</b>（NOAH 1.9m 可停）<br><span style="color:#9a6b00">⚠️ 全館僅 24 台，<b>務必先聯絡飯店預留</b></span></td></tr>
+          </tbody>
+        </table>
+        </div>
+      </div>
+
+
+      <div class="note" style="margin-top:10px"><b>薄野的兩個小提醒</b>
+        <div class="small" style="margin-top:6px;color:inherit">① 薄野是<b>夜生活區</b>，晚上較吵——入住時可請櫃檯安排<b>背向街道</b>的房間。② 走到<b>狸小路</b>只要幾分鐘，10/17 晚餐吃湯咖哩很方便；<b>大通公園</b>也在步行範圍。</div>
+      </div>
+
+      <div class="warn" style="margin-top:12px"><b>🅿️ 停車限高對照（10/17・10/18 兩晚要停車）</b>
+        <div class="small" style="margin-top:6px;color:inherit">日本市區飯店多為<b>機械式立體停車場</b>，常見限高只有 <b>1.55m</b>——<b>7 人座（車高約 1.9m）停不進去</b>。訂房前務必確認限高。</div>
+        <div style="overflow-x:auto;margin-top:10px">
+        <table>
+          <thead><tr><th>停車場</th><th>限制</th><th>費用</th></tr></thead>
+          <tbody>
+            <tr><td><b>京王普雷利亞 札幌</b><br><span class="small">備援停車場</span></td><td><b>車高 2.05m・車長 5.3m・車寬 2.05m</b><br><span class="vd-mid">⚠️ 先到先停、<b>不可預約</b></span><br>14:00–隔天 12:00</td><td>¥2,000／晚</td></tr>
+            <tr><td>Times 北8西4<br><span class="small">備援・24 小時</span></td><td>車高 2.1m・車長 5m・車寬 1.9m</td><td>30 分 ¥300／24 小時上限 ¥1,800</td></tr>
+            <tr><td>Siscon Park 札幌<br><span class="small">備援・24 小時</span></td><td>車高 2.2m・車長 5m・車寬 2.5m<br><span class="vd-ok">尺寸最寬鬆</span></td><td>白天 ¥100／20 分<br>夜間 ¥100／60 分</td></tr>
+          </tbody>
+        </table>
+        </div>
+        <div class="note" style="margin-top:10px;background:#fff;border-color:var(--line)"><b>👉 這題決定選哪台車</b>
+          <ul class="clean" style="margin-top:4px">
+            <li><b>NOAH／VOXY／SERENA</b>（車高約 1.9m・車長約 4.7m）→ <span class="vd-ok">✅ 三個停車場都停得下</span></li>
+            <li><b>ALPHARD</b>（車長 <b>4,995mm</b>）→ <span class="vd-mid">⚠️ 幾乎頂到路邊停車場 5m 上限</span>，飯店滿位時較難找備援</li>
+            <li><b>HIACE Grand Cabin</b>（車高 2.28m）→ <span class="vd-bad">❌ 全部停不進去</span></li>
+          </ul>
+          <b>結論：訂 NOAH／VOXY 級距最安全</b>，停車不會出問題。
+        </div>
+      </div>
+
+      <div style="font-weight:700;color:var(--accent2);margin:16px 0 4px">④ 小樽（<span class="vd-mid">不過夜・已定案</span>）</div>
+      <div class="small">小樽維持 10/18 <b>一日遊</b>（札幌 → 小樽 → 返回札幌），不住宿——札幌連泊 3 晚不必搬行李。小樽當天可順泡<b>朝里川溫泉</b>（見下方溫泉安排）。</div>
+    </div>
+
+    <div class="card" style="margin-top:16px">
+      <h3 style="margin:0 0 10px">♨ 全程溫泉安排</h3>
+      <div style="overflow-x:auto">
+      <table>
+        <thead><tr><th>日期</th><th>溫泉</th><th>形式</th><th>備註</th></tr></thead>
+        <tbody>
+          <tr><td><b>10/13</b> 千歲</td><td>—</td><td>房內衛浴</td><td>千歲站飯店沒有大浴場；這天以永旺採買與休息為主</td></tr>
+          <tr><td><b>10/14</b> 白金</td><td><b>白金溫泉</b>（旅館內湯・露天）</td><td>住宿溫泉</td><td>抵達後與晚餐後皆可入浴</td></tr>
+          <tr><td><b>10/15</b> 白金</td><td><b>白金溫泉</b>（第二晚）</td><td>住宿溫泉</td><td>返回旅館後入浴；另可加遊<b>吹上溫泉 白銀莊</b>（車程約 20 分・山路）</td></tr>
+          <tr><td><b>10/16</b> 札幌</td><td>—</td><td>房內衛浴</td><td>Holiday Inn Express 薄野沒有大浴場；這天是移動與還露營車日</td></tr>
+          <tr><td><b>10/17</b> 定山溪</td><td><b>豐平峽溫泉</b>／<b>定山溪溫泉</b></td><td><span class="vd-ok">日歸泡湯</span></td><td>本行程溫泉重點。豐平峽以<b>大露天風呂</b>與咖哩聞名；定山溪溫泉街亦有多家可日歸入浴</td></tr>
+          <tr><td><b>10/18</b> 小樽→千歲</td><td><b>朝里川溫泉</b>（小樽近郊）</td><td><span class="vd-ok">日歸泡湯</span></td><td>小樽行程結束後順道入浴，再回札幌（車程約 40 分）</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <div class="note" style="margin-top:10px"><b>泡湯集中在這 4 次：</b>白金溫泉連泊兩晚（源泉 100% 掛流）＋ 10/17 豐平峽／定山溪 ＋ 10/18 朝里川。千歲與札幌的飯店都是房內衛浴，想多泡的話，白金那兩晚可以早晚各泡一回。</div>
+      <div class="small" style="margin-top:8px"><b>其他可選（想多泡再加）：</b>
+        <b>支笏湖・丸駒溫泉旅館</b>（湖畔天然露天風呂，全日本少見與湖水相連的浴池；<span style="color:#9a6b00">日歸僅 11:00–14:00、週一～週四休</span>，10/18 是週日可去但時間卡小樽，需取捨）、
+        <b>小金湯溫泉</b>（札幌往定山溪路上）、
+        <b>休暇村支笏湖</b>（日歸時段較寬）。
+      </div>
+      <div class="warn" style="margin-top:10px"><b>入浴注意事項：</b>單次浸泡以 <b>10–15 分鐘</b>為宜、水溫不宜過高；<b>飯後、飲酒後、服藥後請暫緩入浴</b>；入浴前後補充水分；有高血壓或心臟疾病者請先諮詢醫師；建議<b>結伴入浴</b>。浴場地面濕滑，請穿防滑拖鞋並扶握扶手。</div>
+    </div>
+
+  </section>
+
+  <!-- 費用試算 -->
+  
+
+  <!-- 準備清單 -->
+  
+
+  <!-- 入境與通關 -->
+  
+
+  <!-- 景點連結 -->
+  <section id="spots" data-tab="nav" style="order:1">
+    <h2>🧭 導航（開車用）</h2>
+    <div class="warn">
+      <b>點「🧭 導航」＝ 直接啟動 Google 地圖路線導引</b>（自動以你目前位置為起點、開車模式）。依<b>日期順序</b>排列，當天要去哪就點哪個。
+      <div class="small" style="margin-top:6px;color:inherit">⚠️ <b>請在停車時操作</b>，行駛中交由副駕點選。出發前先確認手機有網路（eSIM／分享器）。標 <span class="optpill">可選</span> 者為備案景點。</div>
+    </div>
+    <div class="card" style="margin-top:14px" id="routecard">
+      <h3 style="margin:0 0 8px;font-size:15px">🗺 10/14 全程路線（一鍵開啟）</h3>
+      <div class="small" style="margin-bottom:10px">按下去會在 Google 地圖開啟<b>含所有停留點的完整路線</b>，照順序跑就好，不用一個一個找。</div>
+      <a class="mlink" style="display:inline-block;margin-bottom:8px" target="_blank" href="https://www.google.com/maps/dir/?api=1&origin=%E5%8D%83%E6%AD%B3%E3%82%B9%E3%83%86%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3%E3%83%9B%E3%83%86%E3%83%AB&destination=%E7%A2%A7%E3%81%AE%E7%BE%8E%20%E3%82%86%E3%82%86%20%E7%99%BD%E9%87%91%E6%B8%A9%E6%B3%89&waypoints=%E9%81%93%E3%81%AE%E9%A7%85%20%E8%87%AA%E7%84%B6%E4%BD%93%E6%84%9F%E3%81%97%E3%82%80%E3%81%8B%E3%81%A3%E3%81%B7%7C%E5%AF%8C%E8%89%AF%E9%87%8E%E3%83%81%E3%83%BC%E3%82%BA%E5%B7%A5%E6%88%BF%7C%E3%83%95%E3%82%A1%E3%83%BC%E3%83%A0%E5%AF%8C%E7%94%B0%7C%E5%9B%9B%E5%AD%A3%E5%BD%A9%E3%81%AE%E4%B8%98%7C%E6%96%B0%E6%A0%84%E3%81%AE%E4%B8%98%E5%B1%95%E6%9C%9B%E5%85%AC%E5%9C%92%7C%E4%B8%89%E6%84%9B%E3%81%AE%E4%B8%98%E5%B1%95%E6%9C%9B%E5%85%AC%E5%9C%92%7C%E6%8B%93%E7%9C%9F%E9%A4%A8&travelmode=driving">🧭 千歲 → 占冠 → 起司工房 → 富田農場 → 四季彩 → 新榮之丘 → 三愛之丘 → 拓真館 → 白金溫泉</a><br>
+      <a class="mlink" style="display:inline-block" target="_blank" href="https://www.google.com/maps/dir/?api=1&origin=%E5%9B%9B%E5%AD%A3%E5%BD%A9%E3%81%AE%E4%B8%98%20%E7%BE%8E%E7%91%9B&destination=%E7%A2%A7%E3%81%AE%E7%BE%8E%20%E3%82%86%E3%82%86%20%E7%99%BD%E9%87%91%E6%B8%A9%E6%B3%89&waypoints=%E6%96%B0%E6%A0%84%E3%81%AE%E4%B8%98%E5%B1%95%E6%9C%9B%E5%85%AC%E5%9C%92%7C%E4%B8%89%E6%84%9B%E3%81%AE%E4%B8%98%E5%B1%95%E6%9C%9B%E5%85%AC%E5%9C%92%7C%E6%8B%93%E7%9C%9F%E9%A4%A8&travelmode=driving">🌅 只要美瑛段：四季彩 → 新榮之丘 → 三愛之丘 → 拓真館 → 白金溫泉</a>
+      <div class="small" style="margin-top:10px">⚠️ 山區訊號不穩，<b>出發前先在飯店 WiFi 開一次</b>讓地圖載好。</div>
+    </div>
+
+    <div class="card" style="margin-top:14px">
+      <ul class="spotlist" id="spotlist"></ul>
+      <div class="small" style="margin-top:10px">溫泉與景點的營業時間、公休日請於行前查官網確認；10 月中下旬部分山區設施會提早結束營業。</div>
+    </div>
+  </section>
+
+  <!-- 候選景點評估 -->
+  <section id="cand-sec" data-tab="nav" style="order:2">
+    <h2 id="cand">✨ 候選景點</h2>
+    <div class="card">
+      <div class="small" style="margin-bottom:10px">你提供的候選露營地／景點，依「是否順路」評估（本趟路線：千歲→美瑛→札幌→定山溪→小樽→機場）。<span class="vd-ok">✅ 建議納入</span>、<span class="vd-mid">⚠️ 可評估・需小繞</span>。（離路線太遠者已移除，留待下次道東／道北專程。）順路的已標在「行程」分頁的地圖上（金色點）。</div>
+      <div style="overflow-x:auto">
+      <table>
+        <thead><tr><th>候選</th><th>類型</th><th>位置</th><th>順路評估</th><th>地圖</th></tr></thead>
+        <tbody>
+          <tr><td><b>北之住居設計社</b><br><span class="small">北之住傢俱中心</span></td><td>選物/咖啡</td><td>東川町（美瑛旁）</td><td><span class="vd-ok">✅ 順路</span>・平坦好走、質感咖啡，好走好休息</td><td><a class="mlink" target="_blank" href="https://www.google.com/maps/dir/?api=1&destination=北の住まい設計社 東川&travelmode=driving">🧭 導航</a></td></tr>
+          <tr><td><b>白樺 PAACHI</b></td><td>森林餐廳</td><td>東川町（美瑛旁）</td><td><span class="vd-ok">✅ 順路</span>・美瑛區用餐點</td><td><a class="mlink" target="_blank" href="https://www.google.com/maps/dir/?api=1&destination=バーチ PAACHI 東川&travelmode=driving">🧭 導航</a></td></tr>
+          <tr><td><b>旭山動物園</b></td><td>景點</td><td>旭川（白金開車約 1 小時）</td><td><span class="vd-mid">🐧 10/15 備案</span>・當天決定即可、不影響住宿；山坡地形，務必租輪椅只看重點</td><td><a class="mlink" target="_blank" href="https://www.google.com/maps/dir/?api=1&destination=旭山動物園&travelmode=driving">🧭 導航</a></td></tr>
+          <tr><td><b>金山湖</b><br><span class="small">金山湖・湖畔露營場</span></td><td>湖/露營</td><td>南富良野（美瑛南約 1h）</td><td><span class="vd-mid">⚠️ 小繞</span>・往南才順路</td><td><a class="mlink" target="_blank" href="https://www.google.com/maps/dir/?api=1&destination=かなやま湖&travelmode=driving">🧭 導航</a></td></tr>
+        </tbody>
+      </table>
+      </div>
+      <div class="small" style="margin-top:8px">建議：<b>北之住居設計社、白樺 PAACHI</b> 可自然融入美瑛行程（皆平坦好走、適合休息用餐）；旭山動物園與金山湖屬「想去才小繞」。</div>
+    </div>
+  </section>
+
+  <!-- 必問清單 -->
+
+
+  <!-- 相簿 -->
+  <section id="album-sec" data-tab="album" style="order:1">
+    <h2>📷 相簿</h2>
+    <div class="note">全程照片都丟<b>同一本共享相簿</b>，點下方按鈕就能看、也能上傳。</div>
+
+
+    <div class="card" style="margin-top:14px">
+      <div class="albumrow">
+        <div class="albumhead"><span class="albumname">🛬 千歲</span><span class="albumtag">10/13・10/19</span></div>
+        <div class="albumspots">新千歲機場・千歲站飯店・永旺千歲店</div>
+        <div class="small" style="line-height:1.75;margin-bottom:10px">📷 星宇班機上的自拍與合照、新千歲機場走道、計程車車內、飯店房間、餃子の王將晚餐、永旺超市採買。</div>
+        <div class="pgrid"><a href="photos/chitose-002.jpg" target="_blank" rel="noopener"><img src="photos/chitose-002.jpg" alt="星宇班機機艙" loading="lazy"></a><a href="photos/chitose-009.jpg" target="_blank" rel="noopener"><img src="photos/chitose-009.jpg" alt="新千歲機場走道" loading="lazy"></a><a href="photos/chitose-011.jpg" target="_blank" rel="noopener"><img src="photos/chitose-011.jpg" alt="搭計程車前往飯店" loading="lazy"></a><a href="photos/chitose-014.jpg" target="_blank" rel="noopener"><img src="photos/chitose-014.jpg" alt="千歲站飯店旁的晚餐" loading="lazy"></a><a href="photos/chitose-017.jpg" target="_blank" rel="noopener"><img src="photos/chitose-017.jpg" alt="永旺千歲店的超市" loading="lazy"></a></div>
+      </div>
+
+      <div class="albumrow">
+        <div class="albumhead"><span class="albumname">🌾 富良野</span><span class="albumtag">10/14</span></div>
+        <div class="albumspots">占冠道之驛・富田農場</div>
+        <div class="small" style="line-height:1.75;margin-bottom:10px">📷 占冠道之驛的紅葉與露營車合影、木屋風格餐廳午餐、富田農場的彩色花田與木造倉庫商店（傍晚光線很美）。</div>
+        <div class="pgrid"><a href="photos/furano-047.jpg" target="_blank" rel="noopener"><img src="photos/furano-047.jpg" alt="占冠道之驛" loading="lazy"></a><a href="photos/furano-052.jpg" target="_blank" rel="noopener"><img src="photos/furano-052.jpg" alt="道之驛的紅葉與露營車" loading="lazy"></a><a href="photos/furano-057.jpg" target="_blank" rel="noopener"><img src="photos/furano-057.jpg" alt="占冠的秋色" loading="lazy"></a><a href="photos/furano-059.jpg" target="_blank" rel="noopener"><img src="photos/furano-059.jpg" alt="紅葉樹" loading="lazy"></a><a href="photos/furano-060.jpg" target="_blank" rel="noopener"><img src="photos/furano-060.jpg" alt="秋天的占冠" loading="lazy"></a><a href="photos/furano-076.jpg" target="_blank" rel="noopener"><img src="photos/furano-076.jpg" alt="木屋風格的午餐店" loading="lazy"></a><a href="photos/furano-078.jpg" target="_blank" rel="noopener"><img src="photos/furano-078.jpg" alt="午餐後的山景" loading="lazy"></a><a href="photos/furano-081.jpg" target="_blank" rel="noopener"><img src="photos/furano-081.jpg" alt="富田農場的木屋商店" loading="lazy"></a><a href="photos/furano-083.jpg" target="_blank" rel="noopener"><img src="photos/furano-083.jpg" alt="乾燥花裝飾" loading="lazy"></a><a href="photos/furano-089.jpg" target="_blank" rel="noopener"><img src="photos/furano-089.jpg" alt="富田農場花田" loading="lazy"></a><a href="photos/furano-091.jpg" target="_blank" rel="noopener"><img src="photos/furano-091.jpg" alt="傍晚的花田" loading="lazy"></a><a href="photos/furano-096.jpg" target="_blank" rel="noopener"><img src="photos/furano-096.jpg" alt="一整片的紅花" loading="lazy"></a><a href="photos/furano-102.jpg" target="_blank" rel="noopener"><img src="photos/furano-102.jpg" alt="彩色花田" loading="lazy"></a><a href="photos/furano-103.jpg" target="_blank" rel="noopener"><img src="photos/furano-103.jpg" alt="FARM TOMITA" loading="lazy"></a><a href="photos/furano-111.jpg" target="_blank" rel="noopener"><img src="photos/furano-111.jpg" alt="富田農場的花牆" loading="lazy"></a></div>
+      </div>
+
+      <div class="albumrow">
+        <div class="albumhead"><span class="albumname">🏞 美瑛・白金溫泉</span><span class="albumtag">10/14–10/16</span></div>
+        <div class="albumspots">白金溫泉旅館・白鬚瀑布・青池・新榮之丘・美瑛選果</div>
+        <div class="small" style="line-height:1.75;margin-bottom:10px">📷 旅館和室鋪被與自助晚餐、早餐、白鬚瀑布的鋼橋與瀑布、青池的湛藍水色、新榮之丘展望、美瑛選果門市。</div>
+        <div class="pgrid"><a href="photos/biei-113.jpg" target="_blank" rel="noopener"><img src="photos/biei-113.jpg" alt="白金溫泉旅館和室" loading="lazy"></a><a href="photos/biei-195.jpg" target="_blank" rel="noopener"><img src="photos/biei-195.jpg" alt="旅館自助晚餐" loading="lazy"></a><a href="photos/biei-128.jpg" target="_blank" rel="noopener"><img src="photos/biei-128.jpg" alt="白鬚瀑布的鋼橋" loading="lazy"></a><a href="photos/biei-130.jpg" target="_blank" rel="noopener"><img src="photos/biei-130.jpg" alt="鋼橋上" loading="lazy"></a><a href="photos/biei-134.jpg" target="_blank" rel="noopener"><img src="photos/biei-134.jpg" alt="白鬚瀑布" loading="lazy"></a><a href="photos/biei-138.jpg" target="_blank" rel="noopener"><img src="photos/biei-138.jpg" alt="白金溪谷秋色" loading="lazy"></a><a href="photos/biei-139.jpg" target="_blank" rel="noopener"><img src="photos/biei-139.jpg" alt="鋼橋" loading="lazy"></a><a href="photos/biei-142.jpg" target="_blank" rel="noopener"><img src="photos/biei-142.jpg" alt="黃葉" loading="lazy"></a><a href="photos/biei-147.jpg" target="_blank" rel="noopener"><img src="photos/biei-147.jpg" alt="青池" loading="lazy"></a><a href="photos/biei-149.jpg" target="_blank" rel="noopener"><img src="photos/biei-149.jpg" alt="青池與白樺" loading="lazy"></a><a href="photos/biei-154.jpg" target="_blank" rel="noopener"><img src="photos/biei-154.jpg" alt="青池水色" loading="lazy"></a><a href="photos/biei-160.jpg" target="_blank" rel="noopener"><img src="photos/biei-160.jpg" alt="青池的白樺步道" loading="lazy"></a><a href="photos/biei-164.jpg" target="_blank" rel="noopener"><img src="photos/biei-164.jpg" alt="白金ビルケ 的霜淇淋" loading="lazy"></a><a href="photos/biei-172.jpg" target="_blank" rel="noopener"><img src="photos/biei-172.jpg" alt="路上的便利商店" loading="lazy"></a><a href="photos/biei-201.jpg" target="_blank" rel="noopener"><img src="photos/biei-201.jpg" alt="南下途中的美瑛街景" loading="lazy"></a><a href="photos/biei-202.jpg" target="_blank" rel="noopener"><img src="photos/biei-202.jpg" alt="美瑛選果" loading="lazy"></a><a href="photos/biei-203.jpg" target="_blank" rel="noopener"><img src="photos/biei-203.jpg" alt="美瑛選果店內" loading="lazy"></a><a href="photos/biei-210.jpg" target="_blank" rel="noopener"><img src="photos/biei-210.jpg" alt="美瑛選果門口的紅葉" loading="lazy"></a></div>
+      </div>
+
+      <div class="albumrow">
+        <div class="albumhead"><span class="albumname">🐧 旭川・旭山動物園</span><span class="albumtag">10/15</span></div>
+        <div class="albumspots">旭山動物園・旭川拉麵午餐</div>
+        <div class="small" style="line-height:1.75;margin-bottom:10px">📷 企鵝、山羊、黑猩猩，園內秋葉步道與大家的合照；午餐是旭川拉麵。</div>
+        <div class="pgrid"><a href="photos/asahikawa-177.jpg" target="_blank" rel="noopener"><img src="photos/asahikawa-177.jpg" alt="旭山動物園：企鵝" loading="lazy"></a><a href="photos/asahikawa-178.jpg" target="_blank" rel="noopener"><img src="photos/asahikawa-178.jpg" alt="企鵝館" loading="lazy"></a><a href="photos/asahikawa-179.jpg" target="_blank" rel="noopener"><img src="photos/asahikawa-179.jpg" alt="企鵝散步" loading="lazy"></a><a href="photos/asahikawa-181.jpg" target="_blank" rel="noopener"><img src="photos/asahikawa-181.jpg" alt="國王企鵝" loading="lazy"></a><a href="photos/asahikawa-184.jpg" target="_blank" rel="noopener"><img src="photos/asahikawa-184.jpg" alt="海豹館" loading="lazy"></a><a href="photos/asahikawa-186.jpg" target="_blank" rel="noopener"><img src="photos/asahikawa-186.jpg" alt="動物園的紀念照" loading="lazy"></a><a href="photos/asahikawa-187.jpg" target="_blank" rel="noopener"><img src="photos/asahikawa-187.jpg" alt="小貓熊空中步道" loading="lazy"></a><a href="photos/asahikawa-188.jpg" target="_blank" rel="noopener"><img src="photos/asahikawa-188.jpg" alt="園內秋葉步道" loading="lazy"></a><a href="photos/asahikawa-191.jpg" target="_blank" rel="noopener"><img src="photos/asahikawa-191.jpg" alt="黑猩猩" loading="lazy"></a><a href="photos/asahikawa-194.jpg" target="_blank" rel="noopener"><img src="photos/asahikawa-194.jpg" alt="山羊" loading="lazy"></a></div>
+      </div>
+
+      <div class="albumrow">
+        <div class="albumhead"><span class="albumname">🏙 札幌</span><span class="albumtag">10/16–10/18</span></div>
+        <div class="albumspots">薄野・三井 Outlet・藻岩山・根室花まる・白色戀人公園</div>
+        <div class="small" style="line-height:1.75;margin-bottom:10px">📷 薄野夜景與拉麵晚餐、藻岩山山頂的札幌全景與纜車、根室花まる迴轉壽司（疊起來的盤子）、白色戀人公園的鐘塔與花壇。</div>
+        <div class="pgrid"><a href="photos/sapporo-221.jpg" target="_blank" rel="noopener"><img src="photos/sapporo-221.jpg" alt="薄野站前取客車" loading="lazy"></a><a href="photos/sapporo-222.jpg" target="_blank" rel="noopener"><img src="photos/sapporo-222.jpg" alt="TOYOTA NOAH 客車" loading="lazy"></a><a href="photos/sapporo-282.jpg" target="_blank" rel="noopener"><img src="photos/sapporo-282.jpg" alt="藻岩山纜車站" loading="lazy"></a><a href="photos/sapporo-285.jpg" target="_blank" rel="noopener"><img src="photos/sapporo-285.jpg" alt="纜車站走道" loading="lazy"></a><a href="photos/sapporo-286.jpg" target="_blank" rel="noopener"><img src="photos/sapporo-286.jpg" alt="纜車票" loading="lazy"></a><a href="photos/sapporo-288.jpg" target="_blank" rel="noopener"><img src="photos/sapporo-288.jpg" alt="藻岩山展望台" loading="lazy"></a><a href="photos/sapporo-289.jpg" target="_blank" rel="noopener"><img src="photos/sapporo-289.jpg" alt="札幌市區全景" loading="lazy"></a><a href="photos/sapporo-291.jpg" target="_blank" rel="noopener"><img src="photos/sapporo-291.jpg" alt="藍天與市區" loading="lazy"></a><a href="photos/sapporo-294.jpg" target="_blank" rel="noopener"><img src="photos/sapporo-294.jpg" alt="藻岩山看札幌市區" loading="lazy"></a><a href="photos/sapporo-295.jpg" target="_blank" rel="noopener"><img src="photos/sapporo-295.jpg" alt="山頂" loading="lazy"></a><a href="photos/sapporo-296.jpg" target="_blank" rel="noopener"><img src="photos/sapporo-296.jpg" alt="藻岩山的拍照框" loading="lazy"></a><a href="photos/sapporo-297.jpg" target="_blank" rel="noopener"><img src="photos/sapporo-297.jpg" alt="藻岩山山頂" loading="lazy"></a><a href="photos/sapporo-299.jpg" target="_blank" rel="noopener"><img src="photos/sapporo-299.jpg" alt="藻岩山山頂的鐘塔" loading="lazy"></a></div>
+      </div>
+
+      <div class="albumrow">
+        <div class="albumhead"><span class="albumname">⚓ 小樽</span><span class="albumtag">10/17</span></div>
+        <div class="albumspots">北一硝子・堺町通・小樽運河</div>
+        <div class="small" style="line-height:1.75;margin-bottom:10px">📷 北一硝子石造倉庫、堺町通（蒸氣時鐘、音樂盒堂、北菓樓）、小樽運河沿岸合影、午餐。</div>
+        <div class="pgrid"><a href="photos/otaru-223.jpg" target="_blank" rel="noopener"><img src="photos/otaru-223.jpg" alt="小樽街角" loading="lazy"></a><a href="photos/otaru-230.jpg" target="_blank" rel="noopener"><img src="photos/otaru-230.jpg" alt="北一硝子石造倉庫" loading="lazy"></a><a href="photos/otaru-231.jpg" target="_blank" rel="noopener"><img src="photos/otaru-231.jpg" alt="北一硝子門口" loading="lazy"></a><a href="photos/otaru-233.jpg" target="_blank" rel="noopener"><img src="photos/otaru-233.jpg" alt="堺町通" loading="lazy"></a><a href="photos/otaru-236.jpg" target="_blank" rel="noopener"><img src="photos/otaru-236.jpg" alt="石造倉庫" loading="lazy"></a><a href="photos/otaru-240.jpg" target="_blank" rel="noopener"><img src="photos/otaru-240.jpg" alt="北菓樓本館" loading="lazy"></a><a href="photos/otaru-243.jpg" target="_blank" rel="noopener"><img src="photos/otaru-243.jpg" alt="北菓樓入口" loading="lazy"></a><a href="photos/otaru-244.jpg" target="_blank" rel="noopener"><img src="photos/otaru-244.jpg" alt="長輩的戰利品" loading="lazy"></a><a href="photos/otaru-246.jpg" target="_blank" rel="noopener"><img src="photos/otaru-246.jpg" alt="小樽舊建築" loading="lazy"></a><a href="photos/otaru-258.jpg" target="_blank" rel="noopener"><img src="photos/otaru-258.jpg" alt="街角的舊銀行" loading="lazy"></a><a href="photos/otaru-265.jpg" target="_blank" rel="noopener"><img src="photos/otaru-265.jpg" alt="蒸氣時鐘一帶" loading="lazy"></a><a href="photos/otaru-267.jpg" target="_blank" rel="noopener"><img src="photos/otaru-267.jpg" alt="小樽運河" loading="lazy"></a><a href="photos/otaru-270.jpg" target="_blank" rel="noopener"><img src="photos/otaru-270.jpg" alt="運河邊" loading="lazy"></a><a href="photos/otaru-277.jpg" target="_blank" rel="noopener"><img src="photos/otaru-277.jpg" alt="運河與倉庫" loading="lazy"></a><a href="photos/otaru-278.jpg" target="_blank" rel="noopener"><img src="photos/otaru-278.jpg" alt="運河旁的倉庫" loading="lazy"></a></div>
+      </div>
+
+      <div class="albumrow">
+        <div class="albumhead"><span class="albumname">🚐 露營車・車上生活</span><span class="albumtag">10/14–10/16</span></div>
+        <div class="albumspots">NOMAD ZIL520 車內外・沿途休息站・大家在車上的畫面</div>
+        <div class="small" style="line-height:1.75;margin-bottom:10px">📷 千歲 NOMAD 領車、停車棚下的露營車、車內座椅與桌面、車上用餐與大家的合照。</div>
+        <div class="pgrid"><a href="photos/van-025.jpg" target="_blank" rel="noopener"><img src="photos/van-025.jpg" alt="露營車駕駛艙" loading="lazy"></a><a href="photos/van-027.jpg" target="_blank" rel="noopener"><img src="photos/van-027.jpg" alt="車內座位" loading="lazy"></a><a href="photos/van-028.jpg" target="_blank" rel="noopener"><img src="photos/van-028.jpg" alt="NOMAD 露營車領車處" loading="lazy"></a><a href="photos/van-030.jpg" target="_blank" rel="noopener"><img src="photos/van-030.jpg" alt="停車場裡的露營車" loading="lazy"></a><a href="photos/van-032.jpg" target="_blank" rel="noopener"><img src="photos/van-032.jpg" alt="車棚下的露營車" loading="lazy"></a><a href="photos/van-034.jpg" target="_blank" rel="noopener"><img src="photos/van-034.jpg" alt="車內餐桌與座位" loading="lazy"></a><a href="photos/van-035.jpg" target="_blank" rel="noopener"><img src="photos/van-035.jpg" alt="車內廚房與沙發" loading="lazy"></a><a href="photos/van-036.jpg" target="_blank" rel="noopener"><img src="photos/van-036.jpg" alt="上鋪床位" loading="lazy"></a><a href="photos/van-175.jpg" target="_blank" rel="noopener"><img src="photos/van-175.jpg" alt="露營車與停車場" loading="lazy"></a><a href="photos/van-176.jpg" target="_blank" rel="noopener"><img src="photos/van-176.jpg" alt="NOMAD 露營車" loading="lazy"></a><a href="photos/van-215.jpg" target="_blank" rel="noopener"><img src="photos/van-215.jpg" alt="夜裡的露營車" loading="lazy"></a></div>
+      </div>
+
+      <div class="albumrow filled">
+        <div class="albumhead"><span class="albumname">🌟 全程總相簿</span><span class="albumtag">10/13–10/19</span></div>
+        <div class="albumspots">不分類、所有人的照片都丟這本</div>
+        <a class="navbtn" style="background:var(--accent2)" href="https://photos.app.goo.gl/d798PCkZ8mPKMSK5A" target="_blank" rel="noopener">📷 打開相簿</a>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:14px">
+      <h3 style="margin:0 0 10px">📌 Google 相簿建議做法</h3>
+      <ul class="clean">
+        <li><b>建共享相簿</b>：Google 相簿 → 建立相簿 → 分享 → 開啟「<b>共同協作</b>」，同行的人都能把照片丟進同一本，回國不用互傳。</li>
+        <li><b>權限選「知道連結的人都可以查看」</b>，家人不用 Google 帳號也能看。</li>
+        <li><b>照上面的地點分本</b>（或先開一本總相簿就好），之後找照片比較快。</li>
+        <li>出發前確認手機<b>自動備份已開啟</b>；旅途中盡量連 WiFi 再備份，省行動數據。</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 重點筆記 -->
+  
+
+  <!-- 參考網站 -->
+  <section id="ref-sec" data-tab="ref" style="order:13">
+    <h2 id="ref">🔗 參考網站</h2>
+    <div class="card">
+      <div class="refgrid">
+        <div class="refgroup">
+          <div class="rt">🚐 交通・租車</div>
+          <a href="https://nomad-zh.jp/price/" target="_blank">NOMAD 露營車・價格頁 ↗</a>
+          <a href="https://nomad-zh.jp/" target="_blank">NOMAD 露營車・首頁 ↗</a>
+          <a href="https://www.starlux-airlines.com/" target="_blank">星宇航空 ↗</a>
+          <a href="https://www.skyscanner.com.tw/" target="_blank">Skyscanner 機票比價 ↗</a>
+          <a href="https://www.jrhokkaido.co.jp/" target="_blank">JR 北海道（時刻表）↗</a>
+        </div>
+        <div class="refgroup">
+          <div class="rt">🚙 露營車生活 靈感（ORI Vanlife）</div>
+          <a href="https://orivanlife.com/" target="_blank">ORI Vanlife 官網 ↗</a>
+          <a href="https://www.facebook.com/orivanlife/?locale=zh_TW" target="_blank">ORI Vanlife 臉書 ↗</a>
+        </div>
+        <div class="refgroup">
+          <div class="rt">🍁 觀光・景點</div>
+          <a href="https://www.biei-hokkaido.jp/ja/facility/shirogane-blue-pond" target="_blank">美瑛・青池（官方）↗</a>
+          <a href="https://www.biei-hokkaido.jp/ja/" target="_blank">美瑛町觀光協會 ↗</a>
+          <a href="https://otaru.gr.jp/" target="_blank">小樽觀光協會 ↗</a>
+          <a href="https://jozankei.jp/" target="_blank">定山溪觀光協會 ↗</a>
+          <a href="https://www.visit-hokkaido.jp/" target="_blank">HOKKAIDO LOVE!（北海道官方）↗</a>
+        </div>
+        <div class="refgroup">
+          <div class="rt">🛡 安全・實用</div>
+          <a href="https://jaf.or.jp/common/global-support/switch-to-japan/translation" target="_blank">JAF 駕照日文譯本 ↗</a>
+          <a href="https://northern-road.jp/navi/" target="_blank">北海道道路情報（冬季路況）↗</a>
+          <a href="https://tenki.jp/" target="_blank">tenki.jp 天氣預報 ↗</a>
+        </div>
+        <div class="refgroup">
+          <div class="rt">🛂 入境・通關</div>
+          <a href="https://services.digital.go.jp/visit-japan-web/" target="_blank">Visit Japan Web（日本入境線上預辦）↗</a>
+          <a href="https://www.immigration.gov.tw/5385/7445/7889/" target="_blank">移民署・自動查驗通關 e-Gate ↗</a>
+          <a href="https://www.customs.go.jp/kaigairyoko/egate.htm" target="_blank">日本海關・電子申告閘門（新千歲可用）↗</a>
+        </div>
+      </div>
+      <div class="small" style="margin-top:12px">連結為各服務官方／常用網站，內容以對方最新公告為準；行前請再次確認露營車條款與道路／天氣狀況。</div>
+    </div>
+  </section>
+  </div><!-- /.wrap -->
+
+  <footer>
+    北海道 溫泉慢遊　·　製作日 2026-07-11　·　資料為規劃草案，營業時間與價格請以各官方最新公告為準
+  </footer>
+</div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+  const C = { base:'#2563eb', biei:'#e05a2b', onsen:'#7c3aed', otaru:'#0891b2', sapporo:'#16a34a' };
+  const spots = [
+    {name:'永旺千歲店', lat:42.8213, lng:141.6520, cat:'base', q:'イオン千歳店', day:'10/13', opt:false, ds:'🛒 飯店旁步行 3 分・食品 8:00–21:45・上山前採買'},
+    {name:'新千歲機場', lat:42.7752, lng:141.6923, cat:'base', q:'新千歳空港', day:'10/13', opt:false, ds:'JX318 13:55 落地／JX319 15:00 起飛'},
+    {name:'NOMAD 露營車 千歳店', lat:42.8258, lng:141.6563, cat:'base', q:'北海道千歳市青葉2丁目17-32', day:'10/14', opt:false, ds:'🚕 10/14 09:00 取車・10/16 約 15:30 還車・距飯店車程 3 分（計程車由 NOMAD 付）'},
+    {name:'白金溫泉（住 2 晚）', lat:43.4060, lng:142.6620, cat:'onsen', q:'白金温泉 美瑛', day:'10/14', opt:false, ds:'♨ 溫泉旅館・距青池約 5 分'},
+    {name:'道之驛 自然體感占冠', lat:42.9785, lng:142.3975, cat:'base', q:'道の駅 自然体感しむかっぷ', day:'10/14', opt:false, ds:'☕ 約 11:45 休息 25 分・占冠IC 下 2 公里・9:00–18:00'},
+    {name:'富良野起司工房', lat:43.3207, lng:142.3772, cat:'biei', q:'富良野チーズ工房', day:'10/14', opt:false, ds:'🍕 13:00 午餐・窯烤披薩與冰淇淋・9:00–17:00 無休・免費停車 120 台'},
+    {name:'四季彩之丘', lat:43.5281, lng:142.4660, cat:'biei', q:'四季彩の丘 美瑛', day:'10/14', opt:false, ds:'🌼 15:25 停 45 分・有電動遊園車・輪椅友善'},
+    {name:'富田農場', lat:43.4173, lng:142.4255, cat:'biei', q:'ファーム富田', day:'10/14', opt:false, ds:'🌾 14:30 停 30 分・10 月薰衣草季已過，主要是商店與秋季花田'},
+    {name:'拼布之路（Ken&Mary之樹）', lat:43.6153, lng:142.4271, cat:'biei', q:'ケンとメリーの木 美瑛', day:'備案', opt:true, ds:'在美瑛町西北側，和本日路線反方向，時間不夠就別繞'},
+    {name:'新榮之丘展望公園', lat:43.5578, lng:142.4591, cat:'biei', q:'新栄の丘展望公園', day:'10/14', opt:false, ds:'🌅 16:20 夕照・日落約 16:50・停車場就在旁邊，不用走'},
+    {name:'三愛之丘展望公園', lat:43.5569, lng:142.4784, cat:'biei', q:'三愛の丘展望公園 美瑛', day:'10/14', opt:false, ds:'🚗 下車看 10 分・丘陵全景・有停車場'},
+    {name:'拓真館（白樺並木）', lat:43.5300, lng:142.4896, cat:'biei', q:'拓真館 美瑛', day:'10/14', opt:true, ds:'🚗 開車經過即可・門口白樺並木很美・免費'},
+    {name:'青池（青池）', lat:43.4926, lng:142.6306, cat:'biei', q:'青い池 美瑛', day:'10/15', opt:false, ds:'必訪・清晨最美'},
+    {name:'白鬚瀑布', lat:43.4082, lng:142.6635, cat:'biei', q:'白ひげの滝 美瑛', day:'10/15', opt:true, ds:'白金・青池旁短程（可選）'},
+    {name:'旭山動物園', lat:43.7686, lng:142.4804, cat:'biei', q:'旭山動物園', day:'10/15', opt:true, ds:'🐧 備案・白金開車約 1 小時・9:30 開園・園內租輪椅'},
+    {name:'定山溪溫泉', lat:42.9686, lng:141.1600, cat:'onsen', q:'定山渓温泉', day:'10/17', opt:true, ds:'♨ 紅葉溫泉鄉（豐平峽二選一）'},
+    {name:'Toyota 租車 地鐵薄野站前店', lat:43.0545, lng:141.3530, cat:'base', q:'トヨタレンタカー 地下鉄すすきの駅前店', day:'10/17', opt:false, ds:'🚗 10:00 取客車・飯店步行約 5 分・南5条西2丁目'},
+    {name:'二見吊橋（定山溪）', lat:42.9648, lng:141.1583, cat:'onsen', q:'二見吊橋 定山渓', day:'10/17', opt:false, ds:'定山溪紅葉散策'},
+    {name:'豐平峽溫泉', lat:42.9500, lng:141.1400, cat:'onsen', q:'豊平峡温泉', day:'10/17', opt:false, ds:'♨ 洗澡・露天名湯＋咖哩'},
+    {name:'狸小路商店街（湯咖哩）', lat:43.0567, lng:141.3536, cat:'sapporo', q:'狸小路商店街', day:'10/17', opt:false, ds:'✅ 有頂棚平坦・湯咖哩晚餐'},
+    {name:'札幌 大通公園', lat:43.0608, lng:141.3469, cat:'sapporo', q:'大通公園 札幌', day:'10/17', opt:true, ds:'市區散步（可選）'},
+    {name:'北海道大學 銀杏並木', lat:43.0757, lng:141.3419, cat:'sapporo', q:'北海道大学 銀杏並木', day:'10/18', opt:false, ds:'✅ 平坦・10月下旬金黃（晨）'},
+    {name:'小樽運河', lat:43.1990, lng:140.9946, cat:'otaru', q:'小樽運河', day:'10/18', opt:false, ds:'慢遊・平坦好走'},
+    {name:'堺町通', lat:43.1918, lng:140.9985, cat:'otaru', q:'堺町通り 小樽', day:'10/18', opt:false, ds:'老街・咖啡'},
+    {name:'朝里川溫泉', lat:43.1470, lng:141.0360, cat:'onsen', q:'朝里川温泉 小樽', day:'10/18', opt:false, ds:'♨ 日歸泡湯・小樽近郊順路'},
+    {name:'北海道神宮（円山公園）', lat:43.0540, lng:141.3070, cat:'sapporo', q:'北海道神宮', day:'備案', opt:true, ds:'⚠️ 未排入・參道碎石台階，時間有餘再考慮'},
+    {name:'札幌場外市場', lat:43.0774, lng:141.3180, cat:'sapporo', q:'札幌場外市場', day:'10/19', opt:false, ds:'🦀 海鮮早餐・06:00 開市・有停車場（距札幌站車程約 10 分）'},
+    {name:'Toyota 租車 新千歲機場 POPLAR 店', lat:42.7880, lng:141.6690, cat:'base', q:'トヨタレンタカー 新千歳空港ポプラ店', day:'10/19', opt:false, ds:'🚗 12:00 還車・千歳市美々758-137・還車後免費接駁約 9 分到航廈'},
+  ];
+  function gmap(q){ return 'https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(q); }
+  function gnav(q){ return 'https://www.google.com/maps/dir/?api=1&destination='+encodeURIComponent(q)+'&travelmode=driving'; }
+
+  const map = L.map('leafletmap').setView([43.15, 141.75], 8);
+  window._map = map;
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+    {maxZoom:18, attribution:'© OpenStreetMap'}).addTo(map);
+
+  const bounds = [];
+  spots.forEach(s=>{
+    const m = L.circleMarker([s.lat,s.lng],
+      {radius:8, color:'#fff', weight:2, fillColor:C[s.cat], fillOpacity:1}).addTo(map);
+    m.bindPopup('<b>'+s.name+'</b><br><span style="color:#666;font-size:12px">'+s.ds+'</span><br>'+
+      '<a href="'+gmap(s.q)+'" target="_blank" style="color:#2563eb;font-weight:700">→ Google 地圖導航</a>');
+    bounds.push([s.lat,s.lng]);
+  });
+  map.fitBounds(bounds, {padding:[30,30]});
+
+  // 候選景點（金色，不影響地圖縮放範圍）
+  const cands=[
+    {name:'北之住居設計社', lat:43.6866, lng:142.530, q:'北の住まい設計社 東川'},
+    {name:'白樺 PAACHI', lat:43.660, lng:142.531, q:'バーチ PAACHI 東川'},
+    {name:'旭山動物園', lat:43.7686, lng:142.4804, q:'旭山動物園'},
+    {name:'金山湖', lat:43.2717, lng:142.3986, q:'かなやま湖'},
+  ];
+  cands.forEach(s=>{
+    const m=L.circleMarker([s.lat,s.lng],{radius:7,color:'#fff',weight:2,fillColor:'#c8973f',fillOpacity:1}).addTo(map);
+    m.bindPopup('<b>候選：'+s.name+'</b><br><span style="color:#666;font-size:12px">大點之間・待評估</span><br><a href="'+gmap(s.q)+'" target="_blank" style="color:#2563eb;font-weight:700">→ Google 地圖導航</a>');
+  });
+
+  // 景點清單（依日期順序）
+  const ul = document.getElementById('spotlist');
+  const dayOrder = ['10/13','10/14','10/15','10/16','10/17','10/18','10/19','備案'];
+  const dayTitle = {
+    '10/13':'10/13 抵達',
+    '10/14':'10/14 北上・富良野／美瑛丘陵',
+    '10/15':'10/15 美瑛精華日（青池・白金溫泉）',
+    '10/16':'10/16 南下・還露營車',
+    '10/17':'10/17 取客車 → 定山溪 → 札幌',
+    '10/18':'10/18 北大銀杏 → 小樽',
+    '10/19':'10/19 場外市場 → 還車 → 賦歸',
+    '備案':'備案・機動（未排入）'
+  };
+  function spotRank(s){
+    return /温泉/.test(s.name) ? 1 : 0;   // 溫泉排當日較後
+  }
+  dayOrder.forEach(d=>{
+    const items = spots.filter(s=>s.day===d).sort((a,b)=>spotRank(a)-spotRank(b));
+    if(!items.length) return;
+    const h = document.createElement('li');
+    h.className = 'daysep';
+    h.innerHTML = '<div class="ds-h">'+dayTitle[d]+'</div>';
+    ul.appendChild(h);
+    items.forEach(s=>{
+      const li = document.createElement('li');
+      li.innerHTML = '<div><span class="nm" style="border-left:3px solid '+C[s.cat]+';padding-left:8px">'+
+        s.name+(s.opt?' <span class="optpill">可選</span>':'')+'</span><br><span class="ds">'+s.ds+'</span></div>'+
+        '<a class="navbtn" style="background:'+C[s.cat]+'" href="'+gnav(s.q)+'" target="_blank">🧭 導航</a>';
+      ul.appendChild(li);
+    });
+  });
+
+  function copyMsg(){
+    const t = document.getElementById('inquiry').innerText;
+    navigator.clipboard.writeText(t).then(()=>{
+      const b=document.querySelector('.copybtn'); const o=b.innerText;
+      b.innerText='✓ 已複製'; setTimeout(()=>b.innerText=o,1600);
+    });
+  }
+
+
+
+  /* ===== 行程日曆（2026 年 10 月，10/1 = 週四） ===== */
+  (function(){
+    const cal=document.getElementById('cal');
+    if(!cal) return;
+    const trips={
+      13:{c:'#2563eb',t:'抵達適應'},
+      14:{c:'#e05a2b',t:'北上美瑛・白金溫泉 🚐♨'},
+      15:{c:'#d1491f',t:'美瑛定點日・溫泉 🚐♨'},
+      16:{c:'#7c3aed',t:'南下札幌・還露營車 🚐'},
+      17:{c:'#16a34a',t:'定山溪泡湯 🚙♨'},
+      18:{c:'#0891b2',t:'小樽・朝里川溫泉 🚙♨'},
+      19:{c:'#6b7280',t:'賦歸（自駕→機場）'}
+    };
+    ['日','一','二','三','四','五','六'].forEach(d=>{
+      const e=document.createElement('div'); e.className='dow'; e.textContent=d; cal.appendChild(e);
+    });
+    const firstDow=4, days=31;   // 2026-10-01 = 週四
+    for(let i=0;i<firstDow;i++){ const e=document.createElement('div'); e.className='cell empty'; cal.appendChild(e); }
+    for(let d=1;d<=days;d++){
+      const e=document.createElement('div');
+      const dow=(firstDow+d-1)%7;
+      const tr=trips[d];
+      if(tr){ e.className='cell trip'; e.style.background=tr.c;
+        e.innerHTML='<div class="dn">'+d+'</div><div class="rl">'+tr.t+'</div>'; }
+      else { e.className='cell'+((dow===0||dow===6)?' wknd':''); e.innerHTML='<div class="dn">'+d+'</div>'; }
+      cal.appendChild(e);
+    }
+  })();
+
+  
+
+  /* ===== 日期路徑圖（真實地圖底圖） ===== */
+  (function(){
+    const el=document.getElementById('routemap');
+    if(!el||typeof L==='undefined') return;
+    const P={
+      kuko:[42.7752,141.6923], chitose:[42.8180,141.6565], biei:[43.4926,142.6306],
+      joza:[42.9686,141.1600], sapp:[43.0618,141.3545], otaru:[43.1990,140.9946],
+      shikotsu:[42.7549,141.3517]
+    };
+    const rmap=L.map('routemap',{scrollWheelZoom:false}).setView([43.0,141.6],8);
+    window._rmap=rmap;
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:18,opacity:0.6,attribution:'© OpenStreetMap'}).addTo(rmap);
+    function seg(a,b,color,jr){ L.polyline([a,b],{color:color,weight:4,opacity:0.9,dashArray:jr?'3 9':null,lineCap:'round'}).addTo(rmap); }
+    seg(P.kuko,P.chitose,'#2563eb',true);     // ① 接駁
+    seg(P.chitose,P.biei,'#e05a2b',false);    // ② 露營車 北上
+    seg(P.biei,P.sapp,'#7c3aed',false);       // ④ 露營車 南下到札幌（先放大家）
+    seg(P.sapp,P.chitose,'#7c3aed',true);     // ④ 駕駛獨自去還車＋JR 返回
+    seg(P.sapp,P.joza,'#16a34a',false);       // ⑤ 客車 札幌⇄定山溪
+    seg(P.sapp,P.otaru,'#0891b2',false);      // ⑥ 札幌→小樽
+    seg(P.otaru,P.sapp,'#0891b2',false);      // ⑥ 小樽→札幌（回程）
+    seg(P.sapp,P.kuko,'#6b7280',false);       // ⑦ 札幌→機場 自駕還車
+    // 地點標籤移到空白處，用細引線連回實際位置
+    const anchors=[];
+    function node(pt,label,color,anchor){
+      L.circleMarker(pt,{radius:8,color:'#fff',weight:2,fillColor:color,fillOpacity:1}).addTo(rmap);
+      L.polyline([pt,anchor],{color:'#8a8a8a',weight:1.5,opacity:0.75}).addTo(rmap);
+      L.circleMarker(anchor,{radius:0.1,opacity:0,fillOpacity:0}).addTo(rmap)
+        .bindTooltip(label,{permanent:true,direction:'center',className:'rnode'});
+      anchors.push(anchor);
+    }
+    node(P.biei,'美瑛・青池','#e05a2b',[43.52,142.30]);
+    node(P.otaru,'小樽','#0891b2',[43.33,140.90]);
+    node(P.sapp,'札幌（住3晚）','#16a34a',[43.34,141.30]);
+    node(P.joza,'定山溪溫泉','#7c3aed',[42.905,140.90]);
+    node(P.chitose,'千歲（住1晚・取車）','#2563eb',[42.86,142.15]);
+    node(P.kuko,'新千歲機場','#2563eb',[42.60,141.72]);
+    function mid(a,b){ return [(a[0]+b[0])/2,(a[1]+b[1])/2]; }
+    function badge(pt,num,color){
+      L.circleMarker(pt,{radius:0.1,opacity:0,fillOpacity:0}).addTo(rmap)
+        .bindTooltip('<span class="rnum" style="background:'+color+'">'+num+'</span>',
+          {permanent:true,direction:'center',className:'rbadge-wrap'});
+    }
+    badge([43.20,141.98],'②','#e05a2b');      // 北上線東側
+    badge(P.biei,'③','#d1491f');              // 美瑛定點
+    badge([43.30,141.85],'④','#7c3aed');      // 美瑛→札幌線上
+    badge([43.02,141.24],'⑤','#16a34a');      // 札幌—定山溪之間
+    badge(mid(P.sapp,P.otaru),'⑥','#0891b2');
+    window._rmapBounds=[P.kuko,P.chitose,P.biei,P.joza,P.sapp,P.otaru].concat(anchors);
+    rmap.fitBounds(window._rmapBounds,{padding:[25,25]});
+    function refit(){ rmap.invalidateSize(); if(window._rmapBounds) rmap.fitBounds(window._rmapBounds,{padding:[25,25]}); }
+    setTimeout(refit,300);
+    window.addEventListener('load',refit);
+    var rzt; window.addEventListener('resize',function(){ clearTimeout(rzt); rzt=setTimeout(function(){ refit(); if(window._map) window._map.invalidateSize(); },200); });
+  })();
+
+
+
+
+  /* ===== 飄落楓葉 ===== */
+  (function(){
+    var box=document.getElementById('leaves');
+    if(!box) return;
+    if(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    var glyphs=['🍁','🍂','🍁'];
+    var n=window.innerWidth<720?10:16;
+    for(var i=0;i<n;i++){
+      var el=document.createElement('i');
+      el.textContent=glyphs[i%glyphs.length];
+      el.style.left=(Math.random()*100).toFixed(2)+'vw';
+      el.style.fontSize=(13+Math.random()*16).toFixed(0)+'px';
+      el.style.animationDuration=(14+Math.random()*16).toFixed(1)+'s';
+      el.style.animationDelay=(-Math.random()*30).toFixed(1)+'s';
+      el.style.setProperty('--dx',((Math.random()*160)-80).toFixed(0)+'px');
+      el.style.setProperty('--rot',((Math.random()*540)+180).toFixed(0)+'deg');
+      el.style.opacity=(0.35+Math.random()*0.3).toFixed(2);
+      box.appendChild(el);
+    }
+  })();
+
+
+  /* ===== 訂房截止倒數 ===== */
+  
+
+
+  /* ===== 日語小卡複製 ===== */
+  window.cpJP=function(btn){
+    var t=btn.parentElement.querySelector('.jptext').innerText;
+    navigator.clipboard.writeText(t).then(function(){
+      var o=btn.textContent; btn.textContent='✅ 已複製';
+      setTimeout(function(){btn.textContent=o;},1500);
+    }).catch(function(){ btn.textContent='請長按文字複製'; });
+  };
+
+  /* ===== 分類分頁 ===== */
+  (function(){
+    const btns=[...document.querySelectorAll('.tab-btn')];
+    const sections=[...document.querySelectorAll('.wrap > section')];
+    function show(tab){
+      sections.forEach(s=>{ s.style.display = (s.dataset.tab===tab)?'':'none'; });
+      btns.forEach(b=>b.classList.toggle('active', b.dataset.tab===tab));
+      try{ localStorage.setItem('hokkaido_tab', tab); }catch(e){}
+      // 重新計算被隱藏過的地圖尺寸
+      setTimeout(()=>{
+        if(window._map) window._map.invalidateSize();
+        if(window._rmap){ window._rmap.invalidateSize(); if(window._rmapBounds) window._rmap.fitBounds(window._rmapBounds,{padding:[25,25]}); }
+      },40);
+      window.scrollTo({top:0,behavior:'auto'});
+    }
+    btns.forEach(b=>b.addEventListener('click',()=>show(b.dataset.tab)));
+    let start='overview';
+    try{ const saved=localStorage.getItem('hokkaido_tab'); if(saved && btns.some(b=>b.dataset.tab===saved)) start=saved; }catch(e){}
+    show(start);
+  })();
+</script>
+</body>
+</html>
