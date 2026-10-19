@@ -319,6 +319,7 @@
   <button class="tab-btn" data-tab="stay">交通住宿</button>
   <button class="tab-btn" data-tab="weather">穿著</button>
   <span class="tabbreak"></span>
+  <button class="tab-btn" data-tab="budget">費用</button>
   <button class="tab-btn" data-tab="nav">導航</button>
   <button class="tab-btn" data-tab="album">相簿</button>
   <button class="tab-btn" data-tab="ref">參考</button>
@@ -977,7 +978,43 @@
   </section>
 
   <!-- 費用試算 -->
-  
+  <section id="budget-sec" data-tab="budget" style="order:10">
+    <h2 id="budget">💴 費用試算</h2>
+    <div class="card">
+      <div class="rate">
+        <b>匯率設定：</b>1 日圓 =
+        <input type="number" id="rate" value="0.21" step="0.001" min="0" oninput="syncAll()"> 台幣
+        <span class="small">（日圓項目依此換算成台幣加總；請填當下實際匯率）</span>
+      </div>
+      <div style="overflow-x:auto">
+      <table class="bt">
+        <thead><tr><th>項目</th><th>單價<br>日圓 ¥</th><th>單價<br>台幣 NT$</th><th>數量</th><th>小計<br>台幣</th><th>現場<br>付現</th><th></th></tr></thead>
+        <tbody id="budgetBody"></tbody>
+      </table>
+      </div>
+      <button class="addrow" onclick="addRow()">＋ 新增項目</button>
+
+      <div class="totcard">
+        <div class="t"><div class="v" id="totTWD">—</div><div class="k">總計（台幣）</div></div>
+        <div class="t"><div class="v" id="totJPY">—</div><div class="k">約合日圓</div></div>
+        <div class="t"><div class="v" id="totPP">—</div><div class="k">每人（台幣 ÷ 5）</div></div>
+      </div>
+      <h3 style="margin:22px 0 8px;font-size:15px">💴 日幣現金</h3>
+      <div class="rate" style="margin-bottom:10px">
+        <b>手上日幣現金：</b>¥
+        <input type="number" id="cashJPY" value="242000" step="1000" min="0" oninput="calcBudget()">
+        <span class="small">（2026/10/08 已換）</span>
+      </div>
+      <div class="totcard">
+        <div class="t"><div class="v" id="cashNeed">—</div><div class="k">現場需付現（日圓）</div></div>
+        <div class="t"><div class="v" id="cashLeft">—</div><div class="k" id="cashLeftK">現金餘裕</div></div>
+      </div>
+      <div class="small" style="margin-top:8px">勾選「<b>現場付現</b>」的項目會算進「現場需付現」。已刷卡預付的（機票、三家飯店、露營車、保險）預設不勾。<b>伴手禮與購物沒抓預算</b>，餘裕就是可以花的額度。</div>
+
+      <div class="small" style="margin-top:8px">標「已訂」者為<b>實際金額</b>，其餘為<b>粗估</b>，請依實際支出修改。<b>日圓與台幣兩欄會自動互相換算</b>——填任一欄，另一欄依匯率自動帶出；改匯率時全表重算。小計與總計一律以<b>台幣</b>計。空白＝0；可新增或刪除任何項目。</div>
+      
+    </div>
+  </section>
 
   <!-- 準備清單 -->
   
@@ -1293,7 +1330,95 @@
     });
   }
 
+  /* ===== 費用試算（日圓＋台幣雙欄・自動換算・總計台幣） ===== */
+  const defaultRows=[
+    ['機票 星宇 台中↔札幌（已訂）','TWD',22046,5,false],
+    ['千歲站飯店 10/13（已訂・含早餐）','TWD',8439,1,false],
+    ['白金溫泉 碧之美 YUYU 2晚（已訂・含早晚餐）','TWD',36341,1,false],
+    ['Holiday Inn Express 薄野 3晚2房（已訂・含早餐）','TWD',27435,1,false],
+    ['露營車 ZIL520 3天（已訂・已付款）','JPY',130790,1,false],
+    ['Toyota 客車 10/17–19（取車時付）','JPY',53861,1,true],
+    ['機場接送 計程車 2 台（GO 叫車，10/13 抵達）','JPY',6000,1,true],
+    ['札幌飯店停車費（10/17・10/18）','JPY',2000,2,true],
+    ['油費（露營車＋客車）','JPY',9000,1,true],
+    ['高速公路過路費','JPY',5000,1,true],
+    ['日歸溫泉（10/17・10/18 兩次×5人）','JPY',1000,10,true],
+    ['餐飲（住宿已含 6 份早餐＋2 份晚餐，其餘自理）','JPY',1500,50,true],
+    ['海外旅遊保險 5 人（已投保・國泰產險）','TWD',9441,1,false],
+    ['eSIM／網路（5 人）','TWD',0,1,false],
+    ['伴手禮／購物','JPY',0,1,true],
+    ['其他（雜支／接送等）','JPY',0,1,true],
+  ];
+  function fmt(n){ return Math.round(n).toLocaleString('en-US'); }
+  function getRate(){ return parseFloat(document.getElementById('rate').value)||0; }
+  function rowHTML(label,jpy,twd){
+    return '<td><input class="lbl" value="'+label.replace(/"/g,'&quot;')+'"></td>'+
+      '<td><input class="num jpy" type="number" min="0" value="'+jpy+'" oninput="onJPY(this)"></td>'+
+      '<td><input class="num twd" type="number" min="0" value="'+twd+'" oninput="onTWD(this)"></td>'+
+      '<td><input class="qty" type="number" min="0" value="1" oninput="calcBudget()"></td>'+
+      '<td class="sub">—</td>'+
+      '<td style="text-align:center"><input type="checkbox" class="cash" onchange="calcBudget()"></td>'+
+      '<td><button class="delrow" onclick="delRow(this)">✕</button></td>';
+  }
+  function syncRow(tr){
+    const r=getRate(), src=tr.dataset.src||'jpy';
+    const jpy=tr.querySelector('.jpy'), twd=tr.querySelector('.twd');
+    if(src==='twd'){ const t=parseFloat(twd.value)||0; jpy.value = r? Math.round(t/r) : 0; }
+    else { const j=parseFloat(jpy.value)||0; twd.value = r? Math.round(j*r) : 0; }
+  }
+  function onJPY(inp){ const tr=inp.closest('tr'); tr.dataset.src='jpy'; syncRow(tr); calcBudget(); }
+  function onTWD(inp){ const tr=inp.closest('tr'); tr.dataset.src='twd'; syncRow(tr); calcBudget(); }
+  function renderJ2T(){
+    const r=getRate();
+    document.querySelectorAll('.j2t').forEach(el=>{
+      const p=String(el.dataset.jpy).split('-').map(x=>parseFloat(x)||0);
+      el.innerText = (p.length===2)
+        ? '¥'+fmt(p[0])+'–'+fmt(p[1])+'（約 NT$'+fmt(p[0]*r)+'–'+fmt(p[1]*r)+'）'
+        : '¥'+fmt(p[0])+'（約 NT$'+fmt(p[0]*r)+'）';
+    });
+  }
+  function syncAll(){ document.querySelectorAll('#budgetBody tr').forEach(syncRow); calcBudget(); renderJ2T(); }
+  function addRow(label,cur,value,qty,cash){
+    const tr=document.createElement('tr');
+    const isJ=(cur||'JPY')==='JPY';
+    tr.dataset.src=isJ?'jpy':'twd';
+    tr.innerHTML=rowHTML(label||'新項目', isJ?(value!=null?value:0):0, isJ?0:(value!=null?value:0));
+    tr.querySelector('.qty').value = qty!=null?qty:1;
+    tr.querySelector('.cash').checked = (cash===undefined) ? isJ : !!cash;
+    document.getElementById('budgetBody').appendChild(tr);
+    syncRow(tr); calcBudget();
+  }
+  function delRow(btn){ btn.closest('tr').remove(); calcBudget(); }
+  function calcBudget(){
+    const r=getRate(); let totalTWD=0, cashNeedJPY=0;
+    document.querySelectorAll('#budgetBody tr').forEach(tr=>{
+      const qty=parseFloat(tr.querySelector('.qty').value)||0;
+      const src=tr.dataset.src||'jpy';
+      const unitTWD = (src==='twd')
+        ? (parseFloat(tr.querySelector('.twd').value)||0)
+        : (parseFloat(tr.querySelector('.jpy').value)||0)*r;
+      const sub=unitTWD*qty; totalTWD+=sub;
+      tr.querySelector('.sub').innerText='NT$'+fmt(sub);
+      const cb=tr.querySelector('.cash');
+      if(cb && cb.checked && r>0) cashNeedJPY += sub/r;
+    });
+    document.getElementById('totTWD').innerText='NT$ '+fmt(totalTWD);
+    document.getElementById('totJPY').innerText= r>0 ? '¥ '+fmt(totalTWD/r) : '—';
+    document.getElementById('totPP').innerText='NT$ '+fmt(totalTWD/5);
 
+    const cj=document.getElementById('cashJPY');
+    if(cj){
+      const have=parseFloat(cj.value)||0;
+      document.getElementById('cashNeed').innerText='¥ '+fmt(cashNeedJPY);
+      const left=have-cashNeedJPY;
+      document.getElementById('cashLeft').innerText=(left<0?'−¥ ':'¥ ')+fmt(Math.abs(left));
+      document.getElementById('cashLeftK').innerText= left<0 ? '現金不足，要再換' : '現金餘裕（可購物）';
+    }
+
+  }
+  defaultRows.forEach(r=>addRow(r[0],r[1],r[2],r[3],r[4]));
+  
+  renderJ2T();
 
   /* ===== 行程日曆（2026 年 10 月，10/1 = 週四） ===== */
   (function(){
